@@ -1,0 +1,17 @@
+# Phase 1 commands run (2026-09-05)
+# pnpm/corepack (COREPACK_HOME=$PWD/.runtime/corepack throughout)
+corepack enable --install-directory /Users/mohamedali/.local/bin pnpm  -> pnpm 11.25.0
+pnpm install                       -> +223 packages; initial store misplace found (see decisions D-P1-01)
+pnpm install (CI=true, storeDir fixed) -> Done, esbuild postinstall approved
+pnpm add -w -D eslint @eslint/js typescript-eslint typescript  (root deps for eslint.config.mjs)
+CI=true pnpm lint        -> Tasks: 3 successful, 3 total
+CI=true pnpm typecheck   -> Tasks: 3 successful, 3 total
+CI=true pnpm test        -> design-system 22 passed; route-score 4 passed; reach-engine 4 passed; Tasks: 3 successful
+# Python
+python3 -m venv .venv
+PIP_CACHE_DIR=$PWD/.runtime/pip-cache .venv/bin/pip install -e .   -> fastapi/httpx/pytest (+fonttools, brotli for subsetting)
+.venv/bin/python -m pytest -q   -> 2 passed, 2 warnings (starlette anyio deprecation on Python 3.14)
+# Fonts
+curl from github.com/google/fonts (atkinsonhyperlegiblenext, ibmplexmono) -> TTF + OFL.txt
+.venv/bin/pyftsubset -> Latin woff2 subsets (12–34 KB); SHA-256 recorded in THIRD_PARTY_DATA.md
+shasum -a 256 fonts/*.woff2 fonts/source/*.ttf fonts/*OFL.txt

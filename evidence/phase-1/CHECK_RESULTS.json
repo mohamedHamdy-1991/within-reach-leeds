@@ -1,0 +1,37 @@
+{
+  "phase": 1,
+  "date": "2026-09-05",
+  "gates": {
+    "lint": { "tool": "turbo -> eslint 9.39.5 (flat config)", "result": "3/3 packages PASS", "exit_code": 0 },
+    "typecheck": { "tool": "turbo -> tsc --noEmit (TS strict)", "result": "3/3 packages PASS", "exit_code": 0 },
+    "node_tests": {
+      "tool": "turbo -> vitest 3",
+      "result": "design-system 22/22, route-score 4/4, reach-engine 4/4",
+      "exit_code": 0
+    },
+    "python_tests": {
+      "tool": "pytest 8 (fastapi TestClient)",
+      "result": "2/2 passed; 2 starlette/anyio deprecation warnings on Python 3.14 (non-blocking)",
+      "exit_code": 0
+    }
+  },
+  "accessibility_evidence": {
+    "axe": "every core component rendered and scanned with axe-core; violations must equal []",
+    "keyboard": "SkipLink focus+visible, Button Enter activation, ActionTile Enter+Space activation and aria-current textual active state",
+    "colour_independence": "ConfidenceBadge asserted to carry a text word for all 5 provenance labels; never colour alone",
+    "reduced_motion": "CSS: loading spinner and route/pin/park animations disabled under prefers-reduced-motion",
+    "pending": ["200% zoom reflow (Playwright, Phase 2)", "screen-reader pass (Phase 6 manual matrix)", "high-contrast browser modes (Phase 6)"]
+  },
+  "packages": ["@within-reach/design-system 0.0.1", "@within-reach/route-score 0.0.1", "@within-reach/reach-engine 0.0.1", "within-reach-api 0.0.1 (FastAPI scaffold)"],
+  "fonts": {
+    "families": ["Atkinson Hyperlegible Next (variable, OFL 1.1)", "IBM Plex Mono 400/700 (OFL 1.1)"],
+    "subsets": "Latin woff2 via pyftsubset; SHA-256 in THIRD_PARTY_DATA.md"
+  },
+  "storage_compliance": {
+    "pnpm_store": "/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/.runtime/pnpm-store",
+    "pip_cache": ".runtime/pip-cache",
+    "corepack_home": ".runtime/corepack",
+    "misplaced_store_removed": "/Volumes/Mo.Hamdy/.pnpm-store (existed briefly, deleted)"
+  },
+  "blockers": []
+}

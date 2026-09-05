@@ -25,6 +25,10 @@ Mobile must become a genuinely mobile composition, not a squeezed desktop: compa
 
 ## Full experience requirements
 
+The map is the permanent application surface from the first frame. Do not replace it with a marketing hero, dashboard or separate landing screen. On desktop, the rail and white task column sit beside the persistent map. On mobile/tablet, the map fills the available application viewport and the landing controls appear as a bottom sheet over it. Every task opens a distinct extended panel, bottom sheet or contextual floating window while the same map remains visible underneath or beside it. Back/close returns to the unchanged landing-map state.
+
+Every task also changes the relevant map presentation dynamically without reloading the page: My Reach animates the standard and personal contours; Routes draws and compares fastest/easier paths; Places highlights relevant known points; Parks highlights the selected green-space area. At the same time, update the screenshot-style floating journey card, map heading and legend to match the active task. These are coordinated state changes, not separate pages. Preserve origin, zoom and user-entered values when moving between panels. Never show a preview animation as validated live data.
+
 Implement an expandable menu with labelled expanded state and icon-only collapsed state on desktop. On mobile it becomes a two-column task menu that opens/closes from the header. Preserve focus and announce state changes.
 
 Implement full-screen map mode on desktop and mobile. The action must change to `Exit full map`, remain visible, support Escape, restore the previous planning view and never strand keyboard or screen-reader users. When a task is selected, reveal the planning/results panel over or beside the map with a clear `Back` action.
@@ -56,4 +60,3 @@ Capture and inspect desktop/mobile/full-map screenshots. Compare desktop structu
 Final status must be only `PASS`, `AUTHOR_DECISION_REQUIRED` or `BLOCKER`. Report implemented capabilities, exact commands and exit codes, A01–A20 results, screenshots, unresolved items and canonical paths. Never use “pass with issues.”
 
 Begin now. Work autonomously through the final clean-room gate.
-

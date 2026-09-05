@@ -4,7 +4,7 @@ Every page needs loading, empty, partial-data, offline, permission-denied and se
 
 ## P01 Home `/`
 
-Top: wordmark, city label, menu. Search/location row. Map with current location or Leeds overview. Bottom/side task launcher with exactly four actions. First visit opens no blocking tutorial. If location is unknown, map centres on Leeds and the search field explains the next step.
+The map is the permanent landing surface. Desktop shows the charcoal navigation rail and white task column beside it; mobile/tablet shows a full application-height map with the landing controls as a bottom sheet. Top: wordmark, city label, expandable menu and map controls. Search/location row and exactly four actions remain immediately available. Each action replaces the task column or opens a bottom sheet/context window while preserving the map state. First visit opens no blocking tutorial. If location is unknown, map centres on Leeds and the search field explains the next step.
 
 ## P02 Preferences `/preferences`
 
@@ -61,4 +61,3 @@ Edit preferences; location permission status with browser instructions; local re
 ## P15 About data, privacy and accessibility
 
 Source list, licences, refresh dates, known limitations, privacy notice, accessibility statement, contact placeholders clearly marked `AUTHOR_DECISION_REQUIRED` until supplied. These pages must be reachable without opening the map.
-

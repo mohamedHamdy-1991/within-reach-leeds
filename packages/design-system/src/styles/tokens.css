@@ -1,0 +1,13 @@
+:root {
+  --color-ink:#171717; --color-paper:#f4f5f2; --color-signal:#f4ca28;
+  --color-signal-pale:#fff4bd; --color-blue:#2387c9; --color-amber:#8c5200;
+  --color-red:#b42318; --color-rule:#d9ddd8;
+  --font-display:"Atkinson Hyperlegible Next",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible Next",system-ui,sans-serif;
+  --font-data:"IBM Plex Mono",ui-monospace,monospace;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-6:24px; --space-8:32px; --space-12:48px; --space-16:64px;
+  --radius-control:10px; --radius-panel:14px; --target-min:44px;
+  --focus:0 0 0 3px #f7f8f4,0 0 0 6px #2f65a7;
+}
+@media (prefers-reduced-motion: reduce) { :root { --motion-reach:0ms; } }

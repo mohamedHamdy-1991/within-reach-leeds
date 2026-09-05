@@ -1,0 +1,192 @@
+/* WITHIN REACH component grammar — plain CSS on token variables, no theme layer. */
+
+/* --- Primitives ------------------------------------------------------- */
+
+.wr-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  min-width: var(--target-min);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-control);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  background: #ffffff;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.wr-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.wr-button--primary {
+  background: var(--color-signal);
+}
+.wr-button--selected {
+  background: var(--color-signal-pale);
+}
+.wr-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+.wr-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-signal);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  border-radius: var(--radius-control);
+}
+.wr-skip-link:focus {
+  left: var(--space-2);
+}
+
+/* --- Actions ---------------------------------------------------------- */
+
+.wr-action-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  background: #ffffff;
+  border: 2px solid var(--color-rule);
+  border-radius: var(--radius-control);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.wr-action-tile:hover {
+  border-color: var(--color-ink);
+}
+.wr-action-tile[aria-current="true"],
+.wr-action-tile.is-active {
+  border-color: var(--color-ink);
+  background: var(--color-signal-pale);
+}
+.wr-action-tile:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+.wr-action-tile__icon {
+  flex: none;
+  display: inline-flex;
+  color: var(--color-ink);
+}
+.wr-action-tile__label {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.wr-action-tile__consequence {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  opacity: 0.8;
+}
+
+/* --- Confidence and status -------------------------------------------- */
+
+.wr-confidence-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink);
+}
+.wr-confidence-badge__symbol {
+  font-weight: 700;
+}
+.wr-confidence-badge--verified .wr-confidence-badge__symbol,
+.wr-confidence-badge--community_verified .wr-confidence-badge__symbol {
+  color: var(--color-blue);
+}
+.wr-confidence-badge--mapped .wr-confidence-badge__symbol {
+  color: var(--color-amber);
+}
+.wr-confidence-badge--inferred .wr-confidence-badge__symbol {
+  color: var(--color-amber);
+}
+.wr-confidence-badge--unknown .wr-confidence-badge__symbol {
+  color: var(--color-red);
+}
+.wr-confidence-badge__meta {
+  font-family: var(--font-data);
+  font-size: 0.75rem;
+  color: var(--color-ink);
+  opacity: 0.75;
+}
+
+.wr-safety-notice {
+  border: 2px solid var(--color-rule);
+  border-left: 6px solid var(--color-blue);
+  border-radius: var(--radius-control);
+  padding: var(--space-3) var(--space-4);
+  background: #ffffff;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+.wr-safety-notice__title {
+  font-weight: 700;
+  margin: 0 0 var(--space-1);
+}
+.wr-safety-notice p {
+  margin: 0;
+}
+
+/* --- States ------------------------------------------------------------ */
+
+.wr-empty-state,
+.wr-loading-state {
+  padding: var(--space-6);
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+.wr-loading-state[aria-busy="true"]::after {
+  content: "";
+  display: block;
+  margin: var(--space-3) auto 0;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-rule);
+  border-top-color: var(--color-ink);
+  border-radius: 50%;
+  animation: wr-spin 0.9s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wr-loading-state[aria-busy="true"]::after {
+    animation: none;
+  }
+}
+@keyframes wr-spin {
+  to { transform: rotate(360deg); }
+}
+
+.wr-error-summary {
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius-control);
+  padding: var(--space-3) var(--space-4);
+  background: #ffffff;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+.wr-error-summary__title {
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+  color: var(--color-red);
+}
+.wr-error-summary ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}

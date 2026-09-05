@@ -1,16 +1,22 @@
 {
-  "name":"within-reach-leeds",
-  "private":true,
-  "packageManager":"pnpm@11.25.0",
-  "scripts":{
-    "preflight":"./scripts/check_external_volume.sh",
-    "dev":"turbo dev",
-    "build":"turbo build",
-    "lint":"turbo lint",
-    "typecheck":"turbo typecheck",
-    "test":"turbo test",
-    "test:e2e":"playwright test",
-    "check":"pnpm preflight && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  "name": "within-reach-leeds",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "preflight": "./scripts/check_external_volume.sh",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:e2e": "playwright test",
+    "check": "pnpm preflight && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
-  "devDependencies":{"turbo":"2.10.12"}
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "turbo": "2.10.12",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.69.0"
+  }
 }

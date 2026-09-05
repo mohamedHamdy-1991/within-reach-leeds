@@ -1,4 +1,8 @@
 packages:
   - apps/*
   - packages/*
-
+# pnpm 11 workspace settings: store/cache MUST stay beneath the project root on the SSD.
+storeDir: /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/.runtime/pnpm-store
+cacheDir: /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/.runtime/pnpm-cache
+allowBuilds:
+  esbuild: true

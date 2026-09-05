@@ -1,0 +1,128 @@
+$ vitest run
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90m/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/packages/design-system[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mSkipLink[2m > [22m[2mpasses axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mButton[2m > [22m[2mvariant secondary passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mButton[2m > [22m[2mvariant primary passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mButton[2m > [22m[2mvariant selected passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mActionTile[2m > [22m[2mpasses axe with icon, consequence and long label text
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mConfidenceBadge[2m > [22m[2mvariant verified passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mConfidenceBadge[2m > [22m[2mvariant unknown passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mSafetyNotice[2m > [22m[2mpasses axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+[90mstderr[2m | src/components/components.test.tsx[2m > [22m[2mstates[2m > [22m[2mErrorSummary passes axe
+[22m[39mError: Not implemented: HTMLCanvasElement.prototype.getContext (without installing the canvas npm package)
+    at module.exports (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLCanvasElementImpl.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:42:5)
+    at HTMLCanvasElement.getContext (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/jsdom@26.1.0_supports-color@7.2.0/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:131:58)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17088:49
+    at Object.get (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:11246:23)
+    at _isIconLigature (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:17087:41)
+    at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28725:54
+    at Array.some (<anonymous>)
+    at hasRealTextChildren (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28724:35)
+    at Rule.colorContrastMatches [as matches] (/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/node_modules/.pnpm/axe-core@4.13.0/node_modules/axe-core/axe.js:28686:12) [90mundefined[39m
+
+ [32m✓[39m src/components/components.test.tsx [2m([22m[2m22 tests[22m[2m)[22m[32m 165[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 11:26:55
+[2m   Duration [22m 1.48s[2m (transform 44ms, setup 136ms, collect 108ms, tests 165ms, environment 361ms, prepare 145ms)[22m
+

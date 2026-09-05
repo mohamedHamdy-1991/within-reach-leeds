@@ -1,0 +1,20 @@
+file,change
+pnpm-workspace.yaml,modified (storeDir/cacheDir/allowBuilds)
+.npmrc,new (documentation of storage rule; pnpm 11 reads workspace yaml)
+package.json,modified (root eslint/typescript devDeps)
+pnpm-lock.yaml,new (reproducible lockfile)
+turbo.json,new
+tsconfig.base.json,new
+eslint.config.mjs,new
+packages/design-system/**,new (tokens, styles incl. fonts.css, 8 components, 22-test suite, fonts+licences)
+packages/route-score/**,new (pure scoring scaffold + 4 tests)
+packages/reach-engine/**,new (pure reach math scaffold + 4 tests)
+services/api/**,new (FastAPI /healthz scaffold + 2 tests)
+tests/__init__.py,services/__init__.py,services/api/__init__.py,new
+pyproject.toml,modified (build backend, deps, packages.find)
+THIRD_PARTY_DATA.md,modified (vendored-font register + hashes)
+DECISIONS_AND_ASSUMPTIONS.md,modified (decision log D-P0-01..D-P1-06)
+evidence/phase-1/**,new
+evidence/PREFLIGHT.md,new (Phase 0)
+evidence/phase-0/**,new (Phase 0 evidence pack)
+apps/web/{index.html,app.js,styles.css},foreign-session changes preserved verbatim (commit e5778f7)

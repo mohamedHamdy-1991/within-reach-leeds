@@ -30,3 +30,13 @@
 
 Append only: `YYYY-MM-DD | ID | decision | evidence | files affected | reversible?`.
 
+
+## Decision log
+
+- 2026-09-05 | D-P0-01 | Executed Phase 0: git init on main, baseline commit a06d0d6 (61 scaffold files preserved byte-for-byte), A01 negative test recorded | evidence/phase-0/ | evidence/, .git/ | reversible
+- 2026-09-05 | D-P1-01 | pnpm 11.25.0 activated via corepack with COREPACK_HOME and storeDir/cacheDir beneath project .runtime (pnpm 11 reads workspace settings from pnpm-workspace.yaml, not .npmrc); misplaced volume-root store /Volumes/Mo.Hamdy/.pnpm-store removed after migration | pnpm store path → /Volumes/.../.runtime/pnpm-store/v11 | pnpm-workspace.yaml | reversible
+- 2026-09-05 | D-P1-02 | Node v26.8.1 used instead of Node 22 LTS (system tool, not cache/data; Node 26 is current release line); engines not pinned yet — revisit before CI | evidence/PREFLIGHT.md | — | reversible
+- 2026-09-05 | D-P1-03 | Storybook deferred from Phase 1 to Phase 2: acceptance gate needs component keyboard/contrast/zoom evidence, which vitest + axe-core + Testing-Library fixtures provide now; Storybook is a ~300 MB tooling install whose stories would duplicate the test fixtures at this stage | evidence/phase-1/CHECK_RESULTS.json | docs/14_PHASED_WORK_BREAKDOWN.md not modified | reversible
+- 2026-09-05 | D-P1-04 | Foreign uncommitted landing-page changes (per-task map modes, mobile composition, home tabs; authored outside this session ~11:02) preserved verbatim in commit e5778f7 rather than reverted, to protect concurrent-session work | git show e5778f7 | apps/web/{index.html,app.js,styles.css} | reversible
+- 2026-09-05 | D-P1-05 | Fonts vendored: Atkinson Hyperlegible Next variable + IBM Plex Mono 400/700 from google/fonts, OFL 1.1, Latin-subset woff2 (12–34 KB each), TTF sources retained; Source Sans 3 not vendored (not in DESIGN.md typography) | THIRD_PARTY_DATA.md | packages/design-system/fonts | reversible
+- 2026-09-05 | D-P1-06 | Python: editable install with setuptools backend scoped to services*; venv at project .venv; pip cache on SSD; starlette/anyio deprecation warnings on Python 3.14 noted, not blocking | services/api tests 2/2 | pyproject.toml | reversible
