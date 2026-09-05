@@ -1,0 +1,12 @@
+# Phase 2 commands run (2026-09-05)
+COREPACK_HOME=$PWD/.runtime/corepack
+CI=true pnpm install --no-frozen-lockfile        # web app deps (+ vite override alignment)
+pnpm exec tsc --noEmit                           # exit 0 after fixes
+pnpm exec vitest run                             # 9/9 (src/test)
+CI=true pnpm run build                           # vite build + PWA SW, exit 0
+PLAYWRIGHT_BROWSERS_PATH=$PWD/.runtime/playwright pnpm exec playwright install chromium
+pnpm exec playwright test                        # 12/12 (desktop 1440×900 + mobile 390×844)
+CI=true pnpm lint / typecheck / test             # 4/4 packages each, exit 0
+.venv/bin/python -m pytest -q                    # 2/2
+Screenshots → evidence/phase-2/screenshots/ (5 files)
+Root-cause fixes during the phase: AppProvider missing in test harness; localStorage guards for jsdom; axe scrollable-region-focusable (tabindex=0 on scrollable panel + text view); vite single-version override; e2e baseURL localhost (preview binds ::1)

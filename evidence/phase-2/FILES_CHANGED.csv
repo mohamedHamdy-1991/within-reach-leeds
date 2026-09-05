@@ -1,0 +1,7 @@
+file,change
+apps/web/**,new React/Vite app (migration of static shell)
+apps/web-legacy/**,new (preserved static shell)
+apps/web/package.json + pnpm-lock.yaml,new deps (react,router,vite,vitest,playwright,pwa)
+pnpm-workspace.yaml,modified (vite override)
+evidence/phase-2/**,new evidence + 5 screenshots
+DECISIONS_AND_ASSUMPTIONS.md,modified (D-P2-01..05)

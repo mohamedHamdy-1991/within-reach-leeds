@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">WITHIN REACH contour mark</title>
+  <rect width="512" height="512" rx="96" fill="#F7F8F4"/>
+  <path d="M202 54c163-7 263 92 255 220-7 122-94 191-239 184C88 451 41 367 63 250 86 129 93 59 202 54Z" fill="none" stroke="#17211D" stroke-opacity=".5" stroke-width="22" stroke-dasharray="46 35"/>
+  <path d="M216 135c104-6 164 58 158 145-6 79-66 128-157 122-81-5-117-61-103-137 14-76 32-126 102-130Z" fill="#DCEDE3" stroke="#236B4A" stroke-width="28"/>
+  <circle cx="234" cy="276" r="24" fill="#17211D"/>
+</svg>
+

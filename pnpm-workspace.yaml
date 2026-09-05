@@ -6,3 +6,5 @@ storeDir: /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/.runtime/pnpm-store
 cacheDir: /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/.runtime/pnpm-cache
 allowBuilds:
   esbuild: true
+overrides:
+  vite: ^6.4.3

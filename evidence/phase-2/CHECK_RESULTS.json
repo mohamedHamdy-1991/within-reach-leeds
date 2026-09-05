@@ -1,0 +1,27 @@
+{
+  "phase": 2,
+  "date": "2026-09-05",
+  "gates": {
+    "lint": "4/4 packages PASS",
+    "typecheck": "4/4 packages PASS",
+    "unit_tests": { "design-system": 22, "route-score": 4, "reach-engine": 4, "web": 9, "total": 39, "result": "PASS" },
+    "pytest": "2/2 PASS",
+    "e2e": { "tool": "playwright chromium (SSD .runtime/playwright)", "passed": 12, "failed": 0 },
+    "build": "vite build PASS; PWA precache 8 entries (301.83 KiB)"
+  },
+  "acceptance_evidence": {
+    "A03": "journey shell passes desktop 1440×900 and mobile 390×844 (data-bearing journeys complete in Phase 5)",
+    "A04": "e2e: location denied → place/postcode path completes reach journey; unit test announces fallback",
+    "A07": "unit determinism tests + e2e text-equivalence assertions (same metres/percent in panel and list)",
+    "A12": "axe scans (wcag2a/2aa/22aa) clean on home + results, both viewports; manual SR matrix deferred to Phase 6",
+    "A20": "screenshots captured; reflow test at 320 CSS px passes"
+  },
+  "screenshots": [
+    "evidence/phase-2/screenshots/desktop-home.png",
+    "evidence/phase-2/screenshots/desktop-reach-results.png",
+    "evidence/phase-2/screenshots/desktop-fullmap-exited.png",
+    "evidence/phase-2/screenshots/mobile-home.png",
+    "evidence/phase-2/screenshots/mobile-reach-results.png"
+  ],
+  "blockers": []
+}
