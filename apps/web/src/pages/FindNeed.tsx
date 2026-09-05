@@ -1,0 +1,112 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ConfidenceBadge, EmptyState, LoadingState, SafetyNotice } from "@within-reach/design-system";
+import { useApp } from "../state/app";
+import { fetchPlaces } from "../api/client";
+import type { PlaceDto } from "../api/types";
+
+const NEEDS: { id: string; label: string; category: string | null; hint: string }[] = [
+  { id: "toilet", label: "Toilet", category: "essentials", hint: "Publicly accessible toilets in the release" },
+  { id: "seat", label: "Seat", category: "wellbeing", hint: "Benches and resting places" },
+  { id: "pharmacy", label: "Pharmacy", category: "essentials", hint: "Pharmacies known to the release" },
+  { id: "community", label: "Community hub", category: "community", hint: "Libraries and community centres" },
+  { id: "support", label: "Support and health", category: "support", hint: "Police, health and social facilities" },
+];
+
+export function FindNeed() {
+  const { origin, dataStatus, announce } = useApp();
+  const navigate = useNavigate();
+  const [need, setNeed] = useState<string | null>(null);
+  const [places, setPlaces] = useState<PlaceDto[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const effectiveOrigin = origin ?? { label: "Park Square, Leeds (example)", latitude: 53.8008, longitude: -1.5491 };
+
+  useEffect(() => {
+    if (!need) return;
+    const selected = NEEDS.find((n) => n.id === need);
+    setLoading(true);
+    setError(null);
+    fetchPlaces(effectiveOrigin.latitude, effectiveOrigin.longitude, selected?.category ?? null, 15)
+      .then((results) => {
+        setPlaces(results);
+        announce(`${results.length} known places found`);
+      })
+      .catch((exc: Error) => {
+        setError(exc.message);
+        setPlaces([]);
+      })
+      .finally(() => setLoading(false));
+  }, [need, effectiveOrigin.latitude, effectiveOrigin.longitude, announce]);
+
+  return (
+    <div className="page-sheet">
+      <div className="page-sheet-head">
+        <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
+        <span className="panel-step">I need something</span>
+      </div>
+      <h1>What do you need?</h1>
+      <p className="lead">
+        Starting from <strong>{effectiveOrigin.label}</strong>. Results are the nearest KNOWN places in
+        the active release — we never invent one.
+      </p>
+
+      <div className="task-list find-needs" role="group" aria-label="Choose what you need">
+        {NEEDS.map((item) => (
+          <button
+            key={item.id}
+            className="task"
+            type="button"
+            aria-pressed={need === item.id}
+            onClick={() => setNeed(item.id)}
+          >
+            <span>
+              <strong>{item.label}</strong>
+              <small>{item.hint}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {need && loading && <LoadingState message="Checking the data release" />}
+
+      {need && error && (
+        <EmptyState
+          message={`We couldn't check the data release (${error}). Nothing is shown rather than a guessed list.`}
+          action={<button className="text-button" type="button" onClick={() => setNeed(null)}>Try again</button>}
+        />
+      )}
+
+      {need && !loading && !error && places && places.length === 0 && (
+        <EmptyState message="No known places of this kind inside 2 km of your starting point. That is an honest empty result, not an error." />
+      )}
+
+      {need && !loading && !error && places && places.length > 0 && (
+        <section aria-label="Nearest known places">
+          <ol className="place-results">
+            {places.map((place) => (
+              <li key={place.external_id}>
+                <span>
+                  <strong>{place.name}</strong>
+                  <small>
+                    {place.kind}
+                    {place.metres !== undefined ? ` · about ${Math.round(place.metres)} metres (straight line)` : ""}
+                  </small>
+                </span>
+                <ConfidenceBadge
+                  label={place.confidence}
+                  meta={`${place.source_id} · ${place.retrieved_at}`}
+                />
+              </li>
+            ))}
+          </ol>
+          <SafetyNotice title="Before you set out">
+            Opening hours and current status are not in the active release. Check before travelling.
+            {dataStatus.dataReleaseId ? ` Data release: ${dataStatus.dataReleaseId}.` : ""}
+          </SafetyNotice>
+        </section>
+      )}
+    </div>
+  );
+}

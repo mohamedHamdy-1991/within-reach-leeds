@@ -52,3 +52,6 @@ Append only: `YYYY-MM-DD | ID | decision | evidence | files affected | reversibl
 - 2026-09-05 | D-P4-02 | Valhalla images pinned by digest (a7d0d02e…); tiles built from the checksum-verified Phase 3 release, not a fresh download | .runtime/valhalla | docker-compose profile router | reversible
 - 2026-09-05 | D-P4-03 | API exposes candidate release as mode "release-candidate" with mapped-confidence wording — never claims verified | repository.meta | services/api | reversible
 - 2026-09-05 | D-P4-04 | Async engine made loop-aware (recreate on loop change) — fixes cross-event-loop test pollution | db.py | services/api | reversible
+- 2026-09-05 | D-P5-01 | Phase 5 features consume the LIVE candidate release (real PostGIS + Valhalla) with honest unknown factor disclosure rather than waiting for verified accessibility sources | e2e 18/18 | apps/web, services/api | reversible
+- 2026-09-05 | D-P5-02 | Rest Gap + ParkMatch implemented as pure functions in @within-reach/route-score with hand-checkable fixtures (A08/A09) so UI wiring can never change the arithmetic | route-score tests | packages/route-score | reversible
+- 2026-09-05 | D-P5-03 | ParkMatch treats every requirement as unknown in this release: the OSM-derived data has no per-feature park evidence, and inferring would violate A09 | ParkMatch.tsx | apps/web | reversible

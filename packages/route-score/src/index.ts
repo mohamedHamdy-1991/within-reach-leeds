@@ -42,3 +42,4 @@ export function scoreRoute(factors: readonly RouteFactor[]): RouteScore {
   }
   return { costSeconds, hasUnknowns, hasBarriers };
 }
+export * from "./restgap-parkmatch";

@@ -35,6 +35,9 @@ importers:
       '@within-reach/reach-engine':
         specifier: workspace:*
         version: link:../../packages/reach-engine
+      '@within-reach/route-score':
+        specifier: workspace:*
+        version: link:../../packages/route-score
       react:
         specifier: ^19.0.0
         version: 19.2.8

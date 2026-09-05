@@ -1,0 +1,14 @@
+{
+  "phase": 5,
+  "date": "2026-09-05",
+  "gates": {
+    "A08": "restGaps hand-calculated fixture tests PASS (1500m/800m case, unknown-coverage case, no-rest-points case, duplicate guard) — packages/route-score/src/restgap-parkmatch.test.ts",
+    "A09": "classifyPark tests PASS (known match/mismatch/unknown separated; one known feature never satisfies unknown requirements; empty requirements = unknown)",
+    "A03": "find/route/parks journeys pass desktop 1440×900 and mobile 390×844 with live API",
+    "A06": "route factor table shows Unknown explicitly; API 503 test asserts no fabricated results"
+  },
+  "node_tests": { "route-score": 11, "reach-engine": 4, "design-system": 22, "web": 9 },
+  "python_tests": "20/20 (WR_LIVE_SERVICES=1)",
+  "e2e": { "passed": 18, "failed": 0 },
+  "blockers": []
+}

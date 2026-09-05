@@ -24,6 +24,10 @@ test.describe("seven-journey shell (A03/A12/A20) — desktop 1440×900", () => {
     for (const action of ["Where can I go?", "Take me there", "I need something", "Find a park"]) {
       await expect(page.getByRole("button", { name: new RegExp(action) })).toBeVisible();
     }
+    // Data status: live API when up, otherwise the source-register fallback.
+    await expect(
+      page.getByText(/Live API connected|Leeds source register loaded/).first(),
+    ).toBeVisible({ timeout: 15_000 });
     await axeScan(page);
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "desktop-home.png"), fullPage: false });
 
@@ -72,7 +76,37 @@ test.describe("seven-journey shell (A03/A12/A20) — desktop 1440×900", () => {
   });
 });
 
-test.describe("seven-journey shell (A03/A04/A20) — mobile 390×844", () => {
+test.describe("Phase 5 feature journeys", () => {
+  test("find need shows provenance-carrying results (toilets/services)", async ({ page }) => {
+    await page.goto("/find");
+    await page.getByRole("button", { name: /^Seat/ }).click();
+    await expect(page.getByRole("list")).toBeVisible({ timeout: 15_000 });
+    const first = page.locator(".place-results li").first();
+    await expect(first).toContainText("·");
+    // Every row carries a confidence word, never colour alone.
+    await expect(first).toContainText(/verified|mapped|community verified|inferred|unknown/i);
+  });
+
+  test("route comparison never shows an unexplained score and discloses unknowns (A06)", async ({ page }) => {
+    await page.goto("/route");
+    await page.getByLabel("Destination").fill("Leeds railway station");
+    await page.getByRole("button", { name: "Compare routes" }).click();
+    await expect(page.getByRole("heading", { name: "Fastest" })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText(/Unknown —/).first()).toBeVisible();
+    await expect(page.getByText("Plan, don't navigate")).toBeVisible();
+  });
+
+  test("ParkMatch separates unknown evidence honestly (A09)", async ({ page }) => {
+    await page.goto("/parks");
+    await page.getByText("Regular benches").click();
+    await page.getByRole("button", { name: "Show park matches" }).click();
+    await expect(page.getByRole("heading", { name: /.+/, level: 2 }).first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText("We don't have evidence for this yet.").first()).toBeVisible();
+    await expect(page.getByText("Never inferred", { exact: true })).toBeVisible();
+  });
+});
+
+test.describe("seven-journey shell (A03/A12/A20) — mobile 390×844", () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
   test("location-denied path still completes the reach journey", async ({ page }) => {

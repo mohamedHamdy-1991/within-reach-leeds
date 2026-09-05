@@ -41,7 +41,7 @@ async def meta() -> dict[str, Any]:
     }
 
 
-async def places(latitude: float, longitude: float, category: str | None, limit: int) -> dict[str, Any]:
+async def places(latitude: float, longitude: float, category: str | None, limit: int, kind: str | None = None) -> dict[str, Any]:
     release = await fetch_all("SELECT release_id FROM wr.releases ORDER BY created_at DESC LIMIT 1")
     if not release:
         return {"dataReleaseId": None, "places": []}
@@ -55,11 +55,12 @@ async def places(latitude: float, longitude: float, category: str | None, limit:
         FROM wr.places
         WHERE release_id = :rid
           AND (CAST(:category AS text) IS NULL OR category = CAST(:category AS text))
+          AND (CAST(:kind AS text) IS NULL OR kind = CAST(:kind AS text))
           AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :radius)
         ORDER BY metres ASC
         LIMIT :limit
         """,
-        {"lon": longitude, "lat": latitude, "rid": rid, "category": category, "limit": limit, "radius": 2000},
+        {"lon": longitude, "lat": latitude, "rid": rid, "category": category, "kind": kind, "limit": limit, "radius": 2000},
     )
     return {
         "dataReleaseId": rid,

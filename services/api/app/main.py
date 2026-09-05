@@ -124,13 +124,14 @@ def create_app(*, db: Any = _UNSET, valhalla: Any = _UNSET) -> FastAPI:
         latitude: float = Query(ge=-90, le=90),
         longitude: float = Query(ge=-180, le=180),
         category: str | None = None,
+        kind: str | None = None,
         limit: int = Query(default=20, ge=1, le=50),
     ) -> dict[str, Any]:
         _require_rate(request, limiter, request.client.host if request.client else "anon")
         _require_bounds(latitude, longitude)
         if state["db"] is None:
             raise HTTPException(status_code=503, detail="No active data release; places are unavailable.")
-        return await state["db"].places(latitude, longitude, category, limit)
+        return await state["db"].places(latitude, longitude, category, limit, kind)
 
     @app.get("/api/v1/geocode")
     async def geocode(

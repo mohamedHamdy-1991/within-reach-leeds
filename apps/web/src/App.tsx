@@ -8,7 +8,9 @@ import { ReachResults } from "./pages/ReachResults";
 import { Confidence } from "./pages/Confidence";
 import { Settings } from "./pages/Settings";
 import { About } from "./pages/About";
-import { PreviewStub } from "./pages/PreviewStub";
+import { FindNeed } from "./pages/FindNeed";
+import { RouteComparison } from "./pages/RouteComparison";
+import { ParkMatch } from "./pages/ParkMatch";
 
 export default function App() {
   return (
@@ -19,9 +21,9 @@ export default function App() {
           <Route path="preferences" element={<Preferences />} />
           <Route path="reach" element={<ReachSetup />} />
           <Route path="reach/results" element={<ReachResults />} />
-          <Route path="route" element={<PreviewStub title="Take me there" phase="Phase 5 brings route comparison with the live router" />} />
-          <Route path="find" element={<PreviewStub title="I need something" phase="Phase 5 brings place search with the validated data release" />} />
-          <Route path="parks" element={<PreviewStub title="Find a park" phase="Phase 5 brings ParkMatch with the validated data release" />} />
+          <Route path="route" element={<RouteComparison />} />
+          <Route path="find" element={<FindNeed />} />
+          <Route path="parks" element={<ParkMatch />} />
           <Route path="confidence" element={<Confidence />} />
           <Route path="settings" element={<Settings />} />
           <Route path="about" element={<About />} />

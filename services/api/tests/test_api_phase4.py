@@ -22,7 +22,7 @@ def client_with_fakes():
                 "sources": [{"source_id": "osm", "licence": "ODbL-1.0"}],
             }
 
-        async def places(self, lat, lon, category, limit):
+        async def places(self, lat, lon, category, limit, kind=None):
             return {"dataReleaseId": "test-release", "places": []}
 
         async def geocode(self, q, limit):

@@ -2,14 +2,14 @@
 
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
-  src: url("../fonts/AtkinsonHyperlegibleNext[wght].woff2") format("woff2-variations");
+  src: url("../fonts/AtkinsonHyperlegibleNext%5Bwght%5D.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
-  src: url("../fonts/AtkinsonHyperlegibleNext-Italic[wght].woff2") format("woff2-variations");
+  src: url("../fonts/AtkinsonHyperlegibleNext-Italic%5Bwght%5D.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;

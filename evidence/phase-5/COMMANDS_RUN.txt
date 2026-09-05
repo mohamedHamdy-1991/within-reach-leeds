@@ -1,0 +1,8 @@
+CI=true pnpm --filter @within-reach/route-score test   -> 11/11 (incl. A08 hand-calc + A09)
+CI=true pnpm --filter web add @within-reach/route-score@workspace:*
+CI=true pnpm --filter web run build                    -> PASS (vite + PWA)
+uvicorn services.api.app.main:app (live PostGIS + Valhalla) -> /healthz OK, /api/v1/places?kind=Park -> Playhouse Gardens
+pnpm exec playwright test                              -> 18/18
+CI=true pnpm lint / typecheck / test                   -> exit 0
+WR_LIVE_SERVICES=1 .venv/bin/python -m pytest services pipelines -q -> 20/20
+Root-cause fixes: destination input missing in route e2e; API restarted after kind-filter patch (stale uvicorn caught by e2e); axe-style strict-mode violation in test locator; font URL bracket encoding.
