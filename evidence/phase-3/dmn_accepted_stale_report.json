@@ -1,0 +1,86 @@
+{
+  "leeds_crossings": {
+    "validation": {
+      "source_id": "leeds_crossings",
+      "version_id": "crossings-2026-09-05",
+      "passed": true,
+      "quarantined": false,
+      "reason": null,
+      "issues": [
+        {
+          "check": "geojson",
+          "passed": true,
+          "detail": "666 features"
+        },
+        {
+          "check": "stale_accept",
+          "passed": true,
+          "detail": "accepted under author decision D-SRC-01; dataset is NOT current and is labelled as such"
+        },
+        {
+          "check": "licence",
+          "passed": true,
+          "detail": "OGL-UK-3.0 (Data Mill North)"
+        }
+      ]
+    },
+    "bytes": 185294,
+    "sha256": "fb7fb55490c41aded75e558f5d762b70bfef6aacbb130ab347e34ab7b72d57b4"
+  },
+  "leeds_safe_places": {
+    "validation": {
+      "source_id": "leeds_safe_places",
+      "version_id": "safe-places-2026-09-05",
+      "passed": true,
+      "quarantined": false,
+      "reason": null,
+      "issues": [
+        {
+          "check": "csv",
+          "passed": true,
+          "detail": "201 rows; header: Location,Address 1,Address 2,Address 3,City,Post Code,Latitude ,Longitude"
+        },
+        {
+          "check": "stale_accept",
+          "passed": true,
+          "detail": "accepted under author decision D-SRC-01; dataset is NOT current and is labelled as such"
+        },
+        {
+          "check": "licence",
+          "passed": true,
+          "detail": "OGL-UK-3.0 (Data Mill North)"
+        }
+      ]
+    },
+    "bytes": 17442,
+    "sha256": "8f4608aa4c7a702a3076a623ef723ef26205f2bb52b68871fd57bab81913d583"
+  },
+  "leeds_changing_places": {
+    "validation": {
+      "source_id": "leeds_changing_places",
+      "version_id": "changing-places-2026-09-05",
+      "passed": true,
+      "quarantined": false,
+      "reason": null,
+      "issues": [
+        {
+          "check": "csv",
+          "passed": true,
+          "detail": "33 rows; header: Location,Address line 1,Address line 2,Postcode,Postcode with space,EASTING,NORTHING,WARD_CODE,WARD_NAME,ONS Ref,Telepho"
+        },
+        {
+          "check": "stale_accept",
+          "passed": true,
+          "detail": "accepted under author decision D-SRC-01; dataset is NOT current and is labelled as such"
+        },
+        {
+          "check": "licence",
+          "passed": true,
+          "detail": "OGL-UK-3.0 (Data Mill North)"
+        }
+      ]
+    },
+    "bytes": 14298,
+    "sha256": "bf8f39d65298a5afc176503d13d94bef99b47c9b2c30e889aee730c01eb4d132"
+  }
+}

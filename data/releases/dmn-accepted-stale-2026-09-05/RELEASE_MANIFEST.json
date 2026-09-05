@@ -1,0 +1,58 @@
+{
+  "release_id": "dmn-accepted-stale-2026-09-05",
+  "created_entries": [
+    {
+      "source_id": "leeds_crossings",
+      "version_id": "crossings-2026-09-05",
+      "sha256": "fb7fb55490c41aded75e558f5d762b70bfef6aacbb130ab347e34ab7b72d57b4",
+      "licence": "OGL-UK-3.0",
+      "sha256_verified": "fb7fb55490c41aded75e558f5d762b70bfef6aacbb130ab347e34ab7b72d57b4",
+      "retrieval": {
+        "url": "https://datamillnorth.org/download/ep6gz/892ece59-774c-47aa-878d-e9e681be234d/All%20Sites%20GC.geojson",
+        "retrieved_at": "2026-09-05T14:41:51Z",
+        "sha256": "fb7fb55490c41aded75e558f5d762b70bfef6aacbb130ab347e34ab7b72d57b4",
+        "bytes": 185294,
+        "publisher_dataset_date": "unknown",
+        "accept_stale": true,
+        "author_decision": "D-SRC-01 (2026-09-05): use existing Data Mill North data for now"
+      }
+    },
+    {
+      "source_id": "leeds_safe_places",
+      "version_id": "safe-places-2026-09-05",
+      "sha256": "8f4608aa4c7a702a3076a623ef723ef26205f2bb52b68871fd57bab81913d583",
+      "licence": "OGL-UK-3.0",
+      "sha256_verified": "8f4608aa4c7a702a3076a623ef723ef26205f2bb52b68871fd57bab81913d583",
+      "retrieval": {
+        "url": "https://datamillnorth.org/download/23yj3/47b104aa-feda-4eed-b630-83a843ffdac7/Safe%20Places%20Feb%202019.csv",
+        "retrieved_at": "2026-09-05T14:41:52Z",
+        "sha256": "8f4608aa4c7a702a3076a623ef723ef26205f2bb52b68871fd57bab81913d583",
+        "bytes": 17442,
+        "publisher_dataset_date": "2019-02",
+        "accept_stale": true,
+        "author_decision": "D-SRC-01 (2026-09-05): use existing Data Mill North data for now"
+      }
+    },
+    {
+      "source_id": "leeds_changing_places",
+      "version_id": "changing-places-2026-09-05",
+      "sha256": "bf8f39d65298a5afc176503d13d94bef99b47c9b2c30e889aee730c01eb4d132",
+      "licence": "OGL-UK-3.0",
+      "sha256_verified": "bf8f39d65298a5afc176503d13d94bef99b47c9b2c30e889aee730c01eb4d132",
+      "retrieval": {
+        "url": "https://datamillnorth.org/download/24z8n/fc20ba5b-c3ec-4f36-8d8d-d0d5b449f06e/Changing%20places%20Feb%202019.csv",
+        "retrieved_at": "2026-09-05T14:41:52Z",
+        "sha256": "bf8f39d65298a5afc176503d13d94bef99b47c9b2c30e889aee730c01eb4d132",
+        "bytes": 14298,
+        "publisher_dataset_date": "2019-02",
+        "accept_stale": true,
+        "author_decision": "D-SRC-01 (2026-09-05): use existing Data Mill North data for now"
+      }
+    }
+  ],
+  "city": {
+    "city": "leeds",
+    "note": "ACCEPTED-STALE under author decision D-SRC-01; not current data"
+  },
+  "activation": "manual \u2014 a release becomes the active release only after QA gates"
+}

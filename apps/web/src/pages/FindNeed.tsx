@@ -5,9 +5,13 @@ import { useApp } from "../state/app";
 import { fetchPlaces } from "../api/client";
 import type { PlaceDto } from "../api/types";
 
-const NEEDS: { id: string; label: string; category: string | null; hint: string }[] = [
+const NEEDS: { id: string; label: string; category: string | null; kind?: string; hint: string }[] = [
   { id: "toilet", label: "Toilet", category: "essentials", hint: "Publicly accessible toilets in the release" },
+  { id: "changing", label: "Changing Places", category: "essentials", kind: "Changing Places toilet", hint: "Registered Changing Places (Feb 2019 council register)" },
+  { id: "safe", label: "Safe Place", category: "support", kind: "Safe Place", hint: "Council Safe Places register (Feb 2019)" },
+  { id: "crossing", label: "Crossing", category: "support", kind: "Crossing", hint: "Controlled and push-button crossing sites" },
   { id: "seat", label: "Seat", category: "wellbeing", hint: "Benches and resting places" },
+  { id: "green", label: "Green space", category: "wellbeing", kind: "Green space", hint: "Publicly accessible green spaces (PhD OGL outputs)" },
   { id: "pharmacy", label: "Pharmacy", category: "essentials", hint: "Pharmacies known to the release" },
   { id: "community", label: "Community hub", category: "community", hint: "Libraries and community centres" },
   { id: "support", label: "Support and health", category: "support", hint: "Police, health and social facilities" },
@@ -28,7 +32,7 @@ export function FindNeed() {
     const selected = NEEDS.find((n) => n.id === need);
     setLoading(true);
     setError(null);
-    fetchPlaces(effectiveOrigin.latitude, effectiveOrigin.longitude, selected?.category ?? null, 15)
+    fetchPlaces(effectiveOrigin.latitude, effectiveOrigin.longitude, selected?.category ?? null, 15, selected?.kind)
       .then((results) => {
         setPlaces(results);
         announce(`${results.length} known places found`);

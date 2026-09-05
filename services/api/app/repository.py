@@ -21,11 +21,10 @@ async def meta() -> dict[str, Any]:
             "message": "No validated live accessibility release is active yet.",
             "sources": [],
         }
-    release_id = row[0]["release_id"]
     counts = await fetch_all(
-        "SELECT category, count(*) AS n FROM wr.places WHERE release_id = :rid GROUP BY category",
-        {"rid": release_id},
+        "SELECT category, count(*) AS n FROM wr.places GROUP BY category",
     )
+    releases = await fetch_all("SELECT string_agg(release_id, ', ' ORDER BY created_at) AS ids FROM wr.releases")
     manifest = row[0]["manifest"]
     sources = (
         manifest.get("created_entries", [])
@@ -34,7 +33,7 @@ async def meta() -> dict[str, Any]:
     )
     return {
         "mode": "release-candidate",
-        "dataReleaseId": release_id,
+        "dataReleaseId": releases[0]["ids"] if releases else None,
         "message": "Candidate data release loaded. Accessibility fields are mapped, not verified.",
         "sources": sources,
         "placeCounts": {c["category"]: c["n"] for c in counts},
@@ -42,29 +41,25 @@ async def meta() -> dict[str, Any]:
 
 
 async def places(latitude: float, longitude: float, category: str | None, limit: int, kind: str | None = None) -> dict[str, Any]:
-    release = await fetch_all("SELECT release_id FROM wr.releases ORDER BY created_at DESC LIMIT 1")
-    if not release:
-        return {"dataReleaseId": None, "places": []}
-    rid = release[0]["release_id"]
     rows = await fetch_all(
         """
-        SELECT external_id, name, category, kind,
+        SELECT external_id, name, category, kind, release_id, attrs,
                ST_Y(geom) AS latitude, ST_X(geom) AS longitude,
                confidence, source_id, retrieved_at,
                ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography) AS metres
         FROM wr.places
-        WHERE release_id = :rid
-          AND (CAST(:category AS text) IS NULL OR category = CAST(:category AS text))
+        WHERE (CAST(:category AS text) IS NULL OR category = CAST(:category AS text))
           AND (CAST(:kind AS text) IS NULL OR kind = CAST(:kind AS text))
           AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :radius)
         ORDER BY metres ASC
         LIMIT :limit
         """,
-        {"lon": longitude, "lat": latitude, "rid": rid, "category": category, "kind": kind, "limit": limit, "radius": 2000},
+        {"lon": longitude, "lat": latitude, "category": category, "kind": kind, "limit": limit, "radius": 2000},
     )
+    releases = await fetch_all("SELECT string_agg(release_id, ', ' ORDER BY created_at) AS ids FROM wr.releases")
     return {
-        "dataReleaseId": rid,
-        "note": "Distances are straight-line until route costs are wired (Phase 5). Confidence is 'mapped' for OSM-derived fields.",
+        "dataReleaseId": releases[0]["ids"] if releases else None,
+        "note": "Distances are straight-line until route costs are wired (Phase 5). Accessibility fields are mapped, not verified.",
         "places": [
             {k: (float(v) if k in ("latitude", "longitude", "metres") else v) for k, v in dict(r).items()}
             for r in rows

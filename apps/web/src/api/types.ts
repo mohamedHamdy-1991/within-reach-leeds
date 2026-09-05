@@ -9,6 +9,8 @@ export type PlaceDto = {
   source_id: string;
   retrieved_at: string;
   metres?: number;
+  release_id?: string;
+  attrs?: Record<string, unknown> | null;
 };
 
 export type MetaDto = {

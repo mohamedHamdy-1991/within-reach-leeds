@@ -97,7 +97,9 @@ class TestLiveServices:
     def test_live_meta_reports_release(self):
         client = TestClient(create_app())
         body = client.get("/api/v1/meta").json()
-        assert body["dataReleaseId"] == "osm-west-yorkshire-2026-09-05-candidate"
+        assert "osm-west-yorkshire-2026-09-05-candidate" in body["dataReleaseId"]
+        assert "phd-ogl-2026-09-05-candidate" in body["dataReleaseId"]
+        assert "dmn-accepted-stale-2026-09-05" in body["dataReleaseId"]
         assert body["placeCounts"]["essentials"] >= 100
 
     def test_live_places_returns_provenance(self):
@@ -106,7 +108,7 @@ class TestLiveServices:
         assert len(body["places"]) == 5
         place = body["places"][0]
         assert place["confidence"] in ("verified", "mapped", "community_verified", "inferred", "unknown")
-        assert place["source_id"] == "osm"
+        assert place["source_id"] in ("osm", "phd_green_outputs", "leeds_crossings", "leeds_safe_places", "leeds_changing_places")
 
     def test_live_reach_isochrone(self):
         client = TestClient(create_app())
