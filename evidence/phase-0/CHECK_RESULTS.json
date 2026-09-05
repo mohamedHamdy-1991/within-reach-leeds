@@ -1,0 +1,30 @@
+{
+  "phase": 0,
+  "date": "2026-09-05",
+  "volume_check": {
+    "command": "./scripts/check_external_volume.sh",
+    "exit_code": 0,
+    "stdout": "PASS: external storage ready at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS; free_kb=710326944"
+  },
+  "a01_negative_test": {
+    "command": "PNPM_STORE_DIR=/Users/mohamedali/bad ./scripts/check_external_volume.sh",
+    "exit_code": 24,
+    "stdout": "BLOCKER: runtime path leaves external SSD: /Users/mohamedali/bad",
+    "verdict": "A01 PASS (fail-closed on externalised runtime path; mount/path/free-space rules verified by inspection and positive run)"
+  },
+  "tools": {
+    "node": "v26.8.1",
+    "pnpm": "not installed (corepack @ 11.25.0 planned, store on SSD)",
+    "python": "3.14.7",
+    "docker": "29.7.2",
+    "git": "2.50.1"
+  },
+  "git": {
+    "initialised": true,
+    "baseline_commit": "a06d0d6",
+    "files_in_baseline": 61,
+    "remote": null
+  },
+  "blockers": [],
+  "gates": { "A01": "PASS" }
+}

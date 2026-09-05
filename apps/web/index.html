@@ -14,6 +14,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="device-frame">
   <header class="topbar">
     <a class="brand" href="./" aria-label="WITHIN REACH Leeds home">
       <svg class="brand-mark" viewBox="0 0 56 56" role="img" aria-label="Two reach boundaries around one starting point">
@@ -56,8 +57,8 @@
   <main id="main" class="app-shell">
     <section class="control-panel" aria-labelledby="page-title">
       <div class="intro">
-        <h1 id="page-title">Your city, on your terms.</h1>
-        <p>Explore what you can comfortably reach—not just what an average walking time suggests.</p>
+        <h1 id="page-title">Explore Leeds</h1>
+        <p>Choose a journey task while the map stays in view.</p>
       </div>
 
       <form class="place-form" id="place-form">
@@ -70,6 +71,13 @@
         </div>
         <p class="field-help">Location is used for this session only. You can always type a place instead.</p>
       </form>
+
+      <div class="home-tabs" aria-label="Map task shortcuts">
+        <button class="active" data-task="reach" type="button">My reach</button>
+        <button data-task="route" type="button">Routes</button>
+        <button data-task="need" type="button">Places</button>
+        <button data-task="park" type="button">Parks</button>
+      </div>
 
       <div class="task-list" aria-label="Choose what you want to do">
         <button class="task" data-task="reach" type="button">
@@ -126,6 +134,15 @@
         </svg>
         <div class="map-legend" aria-hidden="true"><span><i class="line standard"></i>Standard reach</span><span><i class="line comfort"></i>Your reach</span></div>
         <p class="preview-warning">Preview geometry only — live routing is not connected.</p>
+        <aside class="journey-card" aria-label="Journey analysis preview">
+          <div class="journey-card-head"><span>Journey preview</span><strong>Data-aware</strong></div>
+          <div class="journey-tabs" aria-hidden="true"><span>Overview</span><span class="active">Route</span><span>Confidence</span></div>
+          <ol class="journey-steps">
+            <li><i></i><span><strong>Your starting point</strong><small>Set a place or use your location</small></span></li>
+            <li><i></i><span><strong>Comfort analysis</strong><small>Steps, hills, surfaces and rest gaps</small></span></li>
+            <li><i></i><span><strong>Your chosen place</strong><small>Waiting for validated route data</small></span></li>
+          </ol>
+        </aside>
       </div>
 
       <div class="text-map-view" id="text-map-view" hidden tabindex="-1">
@@ -140,6 +157,7 @@
       <div id="task-content"></div>
     </section>
   </main>
+  </div>
 
   <div class="sr-status" id="status" role="status" aria-live="polite"></div>
   <noscript><p class="noscript">JavaScript is needed for the interactive controls. The product and data documentation remain available in the repository.</p></noscript>

@@ -1,0 +1,18 @@
+# Phase 0 commands run (2026-09-05)
+./scripts/check_external_volume.sh
+  -> PASS: external storage ready at /Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS; free_kb=710326944  [exit 0]
+PNPM_STORE_DIR=/Users/mohamedali/bad ./scripts/check_external_volume.sh
+  -> BLOCKER: runtime path leaves external SSD  [exit 24]  (A01 negative test)
+node --version  -> v26.8.1
+pnpm --version  -> command not found (pnpm@11.25.0 to be provided by corepack, store on SSD)
+python3 --version  -> Python 3.14.7
+docker --version  -> Docker version 29.7.2
+git --version  -> git version 2.50.1 (Apple Git-155)
+git init -b main  [exit 0]
+git config user.name "Mohamed Hamdy Ali"
+git config user.email "mohamedHamdy-1991@users.noreply.github.com"
+git add -A  -> 61 files staged
+git commit -m "Phase 0 baseline: scaffold, authority docs, contracts, design tokens, static shell"
+  -> a06d0d6  [exit 0]
+git ls-files | sort > evidence/phase-0/baseline_file_list.txt  (61 files)
+shasum -a 256 per file -> evidence/phase-0/baseline_manifest.sha256

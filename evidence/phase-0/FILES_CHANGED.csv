@@ -1,0 +1,33 @@
+file,change
+.gitignore,preserved-from-scaffold
+.github/workflows/ci.yml,preserved-from-scaffold
+.github/workflows/data-refresh.yml,preserved-from-scaffold
+AGENTS.md,preserved-from-scaffold
+AUTONOMOUS_EXPERIENCE_WORKER_PROMPT.md,preserved-from-scaffold
+DECISIONS_AND_ASSUMPTIONS.md,preserved-from-scaffold
+DESIGN.md,preserved-from-scaffold
+FINAL_WORKER_PROMPT.md,preserved-from-scaffold
+PRODUCT.md,preserved-from-scaffold
+START_HERE.md,preserved-from-scaffold
+THIRD_PARTY_DATA.md,preserved-from-scaffold
+apps/web/**,preserved-from-scaffold (10 files)
+config/cities/leeds/**,preserved-from-scaffold (2 files)
+contracts/*.schema.json,preserved-from-scaffold (3 files)
+design/**,preserved-from-scaffold (11 files)
+docker-compose.yml,preserved-from-scaffold
+docs/**,preserved-from-scaffold (15 files)
+package.json,preserved-from-scaffold
+pnpm-workspace.yaml,preserved-from-scaffold
+pyproject.toml,preserved-from-scaffold
+scripts/bootstrap.sh,preserved-from-scaffold
+scripts/check_external_volume.sh,preserved-from-scaffold
+evidence/PREFLIGHT.md,new
+evidence/phase-0/PLAN.md,new
+evidence/phase-0/COMMANDS_RUN.txt,new
+evidence/phase-0/CHECK_RESULTS.json,new
+evidence/phase-0/FILES_CHANGED.csv,new
+evidence/phase-0/SUMMARY.md,new
+evidence/phase-0/UNRESOLVED.md,new
+evidence/phase-0/baseline_file_list.txt,new
+evidence/phase-0/baseline_manifest.sha256,new
+.git/,new (repo initialised at a06d0d6)
