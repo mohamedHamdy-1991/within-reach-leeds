@@ -1,0 +1,11 @@
+docker pull postgis/postgis:16-3.4 && docker pull ghcr.io/valhalla/valhalla:latest  (digests pinned)
+colima restart with /Volumes/Mo.Hamdy writable mount (storage fix, recorded FIXED)
+docker compose up -d db; docker compose exec db pg_isready -U wr  → accepting connections
+docker compose exec -T db psql -f services/api/migrations/001_init.sql  → CREATE TABLE/INDEX x4
+valhalla_build_config + valhalla_build_admins + valhalla_build_tiles → BUILD_OK (77 MB tiles)
+valhalla_service /custom_files/config.json 1 → /status OK, live /isochrone returns 20-min pedestrian polygon
+.venv/bin/pip install osmium "sqlalchemy[asyncio]" asyncpg
+.venv/bin/python scripts/load_places_release.py → {"inserted": 1335, ...}
+set -a && source .env && set +a
+WR_LIVE_SERVICES=1 .venv/bin/python -m pytest services/api/tests -q → 12/12
+.venv/bin/python -m pytest services pipelines -q → 17/17 (offline)
