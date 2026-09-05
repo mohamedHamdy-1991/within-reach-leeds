@@ -188,6 +188,7 @@ export function MapCanvas({ mode, textEquivalent, ariaLabel }: MapCanvasProps) {
           <span><i className="line comfort"></i><b>{modeInfo.legend[1]}</b></span>
         </div>
         <p className="preview-warning">Preview geometry only — live routing is not connected.</p>
+        <p className="map-attribution">© OpenStreetMap contributors (ODbL) · council data © Leeds City Council (OGL)</p>
         <aside className="journey-card" aria-label="Journey analysis preview">
           <div className="journey-card-head">
             <span>{modeInfo.title}</span>

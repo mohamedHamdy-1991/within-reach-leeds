@@ -76,6 +76,19 @@ test.describe("seven-journey shell (A03/A12/A20) — desktop 1440×900", () => {
   });
 });
 
+test.describe("PWA offline shell (A16)", () => {
+  test("shell loads from the service worker when the network is cut; no data is promised", async ({ page, context }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
+    // Give the service worker a moment to activate.
+    await page.waitForTimeout(1500);
+    await context.setOffline(true);
+    await page.reload();
+    await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
+    await context.setOffline(false);
+  });
+});
+
 test.describe("Phase 5 feature journeys", () => {
   test("find need shows provenance-carrying results (toilets/services)", async ({ page }) => {
     await page.goto("/find");

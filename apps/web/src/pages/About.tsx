@@ -26,9 +26,13 @@ export function About() {
           ))}
         </ul>
         <p className="field-help">
-          Map and routing data: OpenStreetMap contributors (ODbL 1.0) — attribution required. Council and
-          Ordnance Survey sources carry their own Open Government Licence statements. Full register:
-          docs/05_DATA_SOURCE_REGISTER.md in the repository.
+          Map and routing data: © OpenStreetMap contributors, ODbL 1.0 — attribution required and
+          given. Council and Ordnance Survey sources carry their own Open Government Licence
+          statements. Full register: docs/05_DATA_SOURCE_REGISTER.md in the repository.
+        </p>
+        <p className="field-help">
+          Routing engine: Valhalla. Map tiles in the interface preview are synthetic; production maps
+          will use permitted PMTiles with the same attribution.
         </p>
       </section>
 

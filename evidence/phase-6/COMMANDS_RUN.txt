@@ -1,0 +1,4 @@
+set -a && source .env && set +a
+WR_LIVE_SERVICES=1 .venv/bin/python -m pytest services/api/tests/test_hardening.py -q  -> 3/3
+CI=true pnpm run build && pnpm exec playwright test  -> 20/20 (incl. offline shell)
+Screenshots refreshed in evidence/phase-2/screenshots/ during the run

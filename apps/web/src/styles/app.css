@@ -241,3 +241,19 @@ button.primary:not(:disabled):hover {
     padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom));
   }
 }
+
+.map-attribution {
+  position: absolute;
+  right: 22px;
+  bottom: 0;
+  margin: 0;
+  padding: 4px 8px;
+  font-size: 0.66rem;
+  color: #444;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px 6px 0 0;
+  pointer-events: none;
+}
+@media (max-width: 960px) {
+  .map-attribution { display: none; }
+}
