@@ -1,0 +1,12 @@
+name: Data refresh candidate
+on:
+  workflow_dispatch: {}
+  schedule: [{cron: "17 3 * * 0"}]
+permissions: {contents: read}
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Worker must implement acquire -> checksum -> validate -> quarantine/publish-candidate. This workflow must never auto-activate production data."
+

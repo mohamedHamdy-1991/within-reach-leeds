@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://within-reach.local/schemas/preferences.json",
+  "type":"object","additionalProperties":false,
+  "required":["speed","maxContinuousMinutes","steps","hills","controlledCrossings","surface","accessibleToilet","changingPlaces"],
+  "properties":{
+    "speed":{"enum":["slow","comfortable","fast"]},
+    "maxContinuousMinutes":{"enum":[5,10,20,"none"]},
+    "restIntervalMetres":{"type":["integer","null"],"minimum":50,"maximum":2000},
+    "steps":{"enum":["avoid_completely","avoid_where_possible","fine"]},
+    "hills":{"enum":["prefer_flatter","moderate_ok","no_preference"]},
+    "controlledCrossings":{"type":"boolean"},
+    "surface":{"enum":["prefer_firm_smooth","no_preference"]},
+    "accessibleToilet":{"type":"boolean"},
+    "changingPlaces":{"type":"boolean"}
+  }
+}
+

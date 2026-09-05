@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,
+  "required":["factor","status","value","unit","confidence","costSeconds"],
+  "properties":{
+    "factor":{"enum":["steps","gradient","rest_gap","crossings","surface","unknown"]},
+    "status":{"enum":["known_ok","known_barrier","partial","unknown"]},
+    "value":{},"unit":{"type":["string","null"]},
+    "confidence":{"enum":["verified","mapped","community_verified","inferred","unknown"]},
+    "costSeconds":{"type":"number","minimum":0},
+    "explanation":{"type":"string"}
+  }
+}
+

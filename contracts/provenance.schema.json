@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,
+  "required":["confidence","sourceId","sourceVersionId","retrievedAt"],
+  "properties":{
+    "confidence":{"enum":["verified","mapped","community_verified","inferred","unknown"]},
+    "sourceId":{"type":"string","minLength":1},
+    "sourceVersionId":{"type":"string","minLength":1},
+    "retrievedAt":{"type":"string","format":"date-time"},
+    "observedAt":{"type":["string","null"],"format":"date-time"},
+    "method":{"type":["string","null"]},
+    "warning":{"type":["string","null"]}
+  }
+}
+

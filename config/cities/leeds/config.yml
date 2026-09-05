@@ -1,0 +1,16 @@
+id: leeds
+name: Leeds
+country: GB
+timezone: Europe/London
+default_locale: en-GB
+bounds_wgs84: [-1.80, 53.65, -1.28, 54.02]
+default_center: [-1.5491, 53.8008]
+default_zoom: 11
+reach_minutes: [5, 10, 15, 20, 30]
+confidence_labels: [verified, mapped, community_verified, inferred, unknown]
+features:
+  public_transport: false
+  community_verification: false
+  policy_analytics: false
+  runtime_ai: false
+

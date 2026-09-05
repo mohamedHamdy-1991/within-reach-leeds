@@ -1,0 +1,16 @@
+{
+  "name":"within-reach-leeds",
+  "private":true,
+  "packageManager":"pnpm@11.25.0",
+  "scripts":{
+    "preflight":"./scripts/check_external_volume.sh",
+    "dev":"turbo dev",
+    "build":"turbo build",
+    "lint":"turbo lint",
+    "typecheck":"turbo typecheck",
+    "test":"turbo test",
+    "test:e2e":"playwright test",
+    "check":"pnpm preflight && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies":{"turbo":"2.10.12"}
+}

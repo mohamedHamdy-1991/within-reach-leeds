@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
+  <title id="title">WITHIN REACH Leeds visual identity board</title>
+  <desc id="desc">A minimal civic design system showing the wordmark, reach contour symbol, palette, typography, map treatment and core controls.</desc>
+  <rect width="1440" height="1024" fill="#F7F8F4"/>
+  <g fill="#17211D" font-family="Arial, sans-serif">
+    <text x="72" y="94" font-size="18" font-weight="700" letter-spacing="2.4">VISUAL IDENTITY / V1</text>
+    <text x="72" y="174" font-size="58" font-weight="700" letter-spacing="-2">WITHIN REACH</text>
+    <text x="527" y="174" font-size="28" font-weight="600">— Leeds</text>
+    <text x="74" y="216" font-size="24">20 minutes isn’t the same for everyone.</text>
+  </g>
+  <g transform="translate(1110 68)">
+    <path d="M74 12C140 14 207 57 210 121C212 177 168 226 101 230C42 232 3 195 9 139C15 81 21 10 74 12Z" fill="none" stroke="#17211D" stroke-opacity=".45" stroke-width="5" stroke-dasharray="14 12"/>
+    <path d="M86 47C136 44 176 74 176 119C176 159 145 192 98 194C55 195 31 168 36 132C42 91 48 50 86 47Z" fill="#DCEDE3" stroke="#236B4A" stroke-width="7"/>
+    <circle cx="102" cy="122" r="8" fill="#17211D"/>
+  </g>
+  <line x1="72" x2="1368" y1="274" y2="274" stroke="#CBD4CE" stroke-width="2"/>
+  <g font-family="Arial, sans-serif">
+    <text x="72" y="332" fill="#17211D" font-size="18" font-weight="700" letter-spacing="1.5">PALETTE</text>
+    <g transform="translate(72 366)"><rect width="148" height="96" rx="10" fill="#17211D"/><text y="126" fill="#17211D" font-size="16">Ink  #17211D</text></g>
+    <g transform="translate(244 366)"><rect width="148" height="96" rx="10" fill="#236B4A"/><text y="126" fill="#17211D" font-size="16">Moss  #236B4A</text></g>
+    <g transform="translate(416 366)"><rect width="148" height="96" rx="10" fill="#DCEDE3" stroke="#CBD4CE"/><text y="126" fill="#17211D" font-size="16">Reach  #DCEDE3</text></g>
+    <g transform="translate(588 366)"><rect width="148" height="96" rx="10" fill="#2F65A7"/><text y="126" fill="#17211D" font-size="16">Route  #2F65A7</text></g>
+    <g transform="translate(760 366)"><rect width="148" height="96" rx="10" fill="#A65A00"/><text y="126" fill="#17211D" font-size="16">Caution  #A65A00</text></g>
+    <g transform="translate(932 366)"><rect width="148" height="96" rx="10" fill="#B42318"/><text y="126" fill="#17211D" font-size="16">Barrier  #B42318</text></g>
+    <g transform="translate(1104 366)"><rect width="148" height="96" rx="10" fill="#CBD4CE"/><text y="126" fill="#17211D" font-size="16">Rule  #CBD4CE</text></g>
+  </g>
+  <g transform="translate(72 565)" font-family="Arial, sans-serif" fill="#17211D">
+    <text font-size="18" font-weight="700" letter-spacing="1.5">TYPE &amp; VOICE</text>
+    <text y="66" font-size="38" font-weight="700">Where can I go?</text>
+    <text y="110" font-size="22">Plain verbs. Calm evidence. No medical labels.</text>
+    <text y="160" font-size="18" font-family="monospace">21 min  •  1.6 km  •  estimated 4.1%</text>
+    <text y="220" font-size="17" font-weight="700">VERIFIED</text>
+    <text x="116" y="220" font-size="17">Council source · checked 02 Sep 2026</text>
+    <text y="258" font-size="17" font-weight="700">UNKNOWN</text>
+    <text x="116" y="258" font-size="17">We don’t know whether this section is step-free.</text>
+  </g>
+  <g transform="translate(820 560)" font-family="Arial, sans-serif">
+    <rect width="548" height="366" rx="18" fill="#FFFFFF" stroke="#CBD4CE" stroke-width="2"/>
+    <text x="28" y="48" fill="#17211D" font-size="16" font-weight="700" letter-spacing="1">ROUTE CHOICE</text>
+    <text x="28" y="94" fill="#17211D" font-size="30" font-weight="700">Easiest</text>
+    <text x="424" y="94" fill="#17211D" font-size="20" font-family="monospace">21 min</text>
+    <line x1="28" x2="520" y1="116" y2="116" stroke="#CBD4CE"/>
+    <text x="28" y="158" fill="#236B4A" font-size="18" font-weight="700">✓ No known steps</text>
+    <text x="28" y="196" fill="#17211D" font-size="18">5 known resting places</text>
+    <text x="28" y="234" fill="#17211D" font-size="18">Longest known rest gap 184 m</text>
+    <text x="28" y="272" fill="#A65A00" font-size="18" font-weight="700">△ Surface known for 82%</text>
+    <rect x="28" y="302" width="492" height="44" rx="10" fill="#236B4A"/>
+    <text x="274" y="331" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">View easiest route</text>
+  </g>
+  <text x="72" y="974" fill="#17211D" font-family="Arial, sans-serif" font-size="15">Signature: standard reach = dashed outline / comfortable reach = solid moss field / unknown coverage = hatch + text</text>
+</svg>
+

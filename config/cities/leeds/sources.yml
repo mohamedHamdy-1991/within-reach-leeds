@@ -1,0 +1,29 @@
+sources:
+  osm:
+    landing_url: https://download.geofabrik.de/europe/united-kingdom/england/yorkshire-and-the-humber.html
+    licence: ODbL-1.0
+    status: candidate
+  leeds_prow:
+    landing_url: https://datamillnorth.org/dataset/leeds-public-rights-of-way-e5l9w
+    licence: OGL-UK-3.0
+    status: candidate_stale_warning
+  leeds_crossings:
+    landing_url: https://datamillnorth.org/dataset/pedestrian-crossing-points-ep6gz
+    licence: OGL-UK-3.0
+    status: quarantined_pending_freshness
+  leeds_safe_places:
+    landing_url: https://datamillnorth.org/dataset/safe-places-23yj3
+    licence: OGL-UK-3.0
+    status: quarantined_pending_current_validation
+  leeds_changing_places:
+    landing_url: https://datamillnorth.org/dataset/changing-places-toilets-in-leeds-24z8n
+    licence: OGL-UK-3.0
+    status: quarantined_pending_current_validation
+  leeds_public_toilets_legacy:
+    landing_url: https://datamillnorth.org/dataset/public-toilets-vq6yn
+    status: prohibited_as_current
+  os_terrain_50:
+    landing_url: https://osdatahub.os.uk/data/downloads/open/Terrain50
+    licence: OGL-UK-3.0
+    status: candidate_inferred_only
+
