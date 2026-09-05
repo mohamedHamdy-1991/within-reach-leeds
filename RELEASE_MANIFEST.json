@@ -1,0 +1,20 @@
+{
+  "product": "WITHIN REACH — Leeds",
+  "built": "2026-09-05",
+  "head": "8a25bafe116723e41aacda2b785bed6f21c936d4",
+  "cleanRoomClone": "/Volumes/Mo.Hamdy/WITHIN_REACH_CLEANROOM",
+  "dataReleases": [
+    {"id": "osm-west-yorkshire-2026-09-05-candidate", "state": "candidate", "sha256File": "data/releases/osm-west-yorkshire-2026-09-05-candidate/RELEASE_MANIFEST.json"}
+  ],
+  "quarantined": [
+    {"source": "leeds_prow/rec-routes-2026-09-05", "reason": "data age 533 days > 365-day policy"},
+    {"source": "osm/west-yorkshire-2026-09-05 (first retrieval)", "reason": "validator bug (since FIXED); re-acquired cleanly"}
+  ],
+  "services": {
+    "postgis": "postgis/postgis:16-3.4@sha256:44126d872ac91993766c341e369c539e8196614321765d36a6f1bab0419a5fa5",
+    "valhalla": "ghcr.io/valhalla/valhalla@sha256:a7d0d02ed5ce4f2817105b443eb58494a5757fc6b48780a39c9cc62740296432",
+    "valhallaTiles": ".runtime/valhalla/valhalla-tiles (77 MB, built from the released extract)"
+  },
+  "testTotals": {"node": 46, "pythonOffline": 17, "pythonLive": 23, "e2e": 20},
+  "acceptance": "evidence/FINAL_ACCEPTANCE_REPORT.md"
+}
