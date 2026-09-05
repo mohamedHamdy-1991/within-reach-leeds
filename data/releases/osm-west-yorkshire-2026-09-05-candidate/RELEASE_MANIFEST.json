@@ -1,0 +1,26 @@
+{
+  "release_id": "osm-west-yorkshire-2026-09-05-candidate",
+  "created_entries": [
+    {
+      "source_id": "osm",
+      "version_id": "west-yorkshire-2026-09-05",
+      "sha256": "66488afa2f905d990100986b04ab78d09d60ea7391e9a3de62c90945ca388a6b",
+      "licence": "ODbL-1.0",
+      "sha256_verified": "66488afa2f905d990100986b04ab78d09d60ea7391e9a3de62c90945ca388a6b",
+      "retrieval": {
+        "url": "https://download.geofabrik.de/europe/united-kingdom/england/west-yorkshire-latest.osm.pbf",
+        "retrieved_at": "2026-09-05T11:19:06Z",
+        "sha256": "66488afa2f905d990100986b04ab78d09d60ea7391e9a3de62c90945ca388a6b",
+        "bytes": 53683499,
+        "http_status": 200,
+        "content_disposition": null,
+        "notes": []
+      }
+    }
+  ],
+  "city": {
+    "city": "leeds",
+    "note": "candidate release; activation requires QA + attribution gates"
+  },
+  "activation": "manual \u2014 a release becomes the active release only after QA gates"
+}

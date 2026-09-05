@@ -1,0 +1,42 @@
+{
+  "sha256": "66488afa2f905d990100986b04ab78d09d60ea7391e9a3de62c90945ca388a6b",
+  "bytes": 53683499,
+  "retrieval": {
+    "url": "https://download.geofabrik.de/europe/united-kingdom/england/west-yorkshire-latest.osm.pbf",
+    "retrieved_at": "2026-09-05T11:19:06Z",
+    "sha256": "66488afa2f905d990100986b04ab78d09d60ea7391e9a3de62c90945ca388a6b",
+    "bytes": 53683499,
+    "http_status": 200,
+    "content_disposition": null,
+    "notes": []
+  },
+  "validation": {
+    "source_id": "osm",
+    "version_id": "west-yorkshire-2026-09-05",
+    "passed": true,
+    "quarantined": false,
+    "reason": null,
+    "issues": [
+      {
+        "check": "osm_pbf_header",
+        "passed": true,
+        "detail": "blob header len 14: b'\\n\\tOSMHeader\\x18\\xcc\\x01'"
+      },
+      {
+        "check": "freshness",
+        "passed": true,
+        "detail": "retrieved 0 days ago (limit 14)"
+      },
+      {
+        "check": "licence",
+        "passed": true,
+        "detail": "licence ODbL-1.0; admissible: ['ODbL-1.0', 'OGL-UK-3.0']"
+      },
+      {
+        "check": "publisher_md5",
+        "passed": true,
+        "detail": "expected 637f69d1ee4a38e42cd930ea7e0b7ff5, actual 637f69d1ee4a38e42cd930ea7e0b7ff5"
+      }
+    ]
+  }
+}

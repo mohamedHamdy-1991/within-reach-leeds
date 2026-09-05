@@ -1,0 +1,29 @@
+{
+  "source_id": "osm",
+  "version_id": "west-yorkshire-2026-09-05",
+  "passed": false,
+  "quarantined": true,
+  "reason": "failed validation gates",
+  "issues": [
+    {
+      "check": "osm_pbf_magic",
+      "passed": false,
+      "detail": "header bytes: b'\\x00\\x00\\x00\\x0e'"
+    },
+    {
+      "check": "freshness",
+      "passed": true,
+      "detail": "retrieved 0 days ago (limit 14)"
+    },
+    {
+      "check": "licence",
+      "passed": true,
+      "detail": "licence ODbL-1.0; admissible: ['ODbL-1.0', 'OGL-UK-3.0']"
+    },
+    {
+      "check": "publisher_md5",
+      "passed": true,
+      "detail": "expected 637f69d1ee4a38e42cd930ea7e0b7ff5, actual 637f69d1ee4a38e42cd930ea7e0b7ff5"
+    }
+  ]
+}

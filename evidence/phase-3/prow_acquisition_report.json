@@ -1,0 +1,33 @@
+{
+  "retrieval": {
+    "url": "https://datamillnorth.org/download/e5l9w/09d52424-408f-421c-88b5-ba39d125abe2/Rec_Routes.zip",
+    "retrieved_at": "2026-09-05T11:19:58Z",
+    "sha256": "547f91971ec3fc4fcc6e7617bdbd590e6acc3afab4487c98c103caf73932ec4d",
+    "bytes": 137373,
+    "publisher_last_modified": "2025-03-20T19:54:41Z"
+  },
+  "validation": {
+    "source_id": "leeds_prow",
+    "version_id": "rec-routes-2026-09-05",
+    "passed": false,
+    "quarantined": false,
+    "reason": null,
+    "issues": [
+      {
+        "check": "shapefile_zip",
+        "passed": true,
+        "detail": "8 entries; shp=True"
+      },
+      {
+        "check": "data_age",
+        "passed": false,
+        "detail": "publisher last-modified 2025-03-20T19:54:41Z (~533 days)"
+      },
+      {
+        "check": "licence",
+        "passed": true,
+        "detail": "licence OGL-UK-3.0; admissible: ['ODbL-1.0', 'OGL-UK-3.0']"
+      }
+    ]
+  }
+}

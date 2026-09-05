@@ -1,0 +1,24 @@
+{
+  "source_id": "leeds_prow",
+  "version_id": "rec-routes-2026-09-05",
+  "passed": false,
+  "quarantined": true,
+  "reason": "failed validation gates",
+  "issues": [
+    {
+      "check": "shapefile_zip",
+      "passed": true,
+      "detail": "8 entries; shp=True"
+    },
+    {
+      "check": "data_age",
+      "passed": false,
+      "detail": "publisher last-modified 2025-03-20T19:54:41Z (~533 days)"
+    },
+    {
+      "check": "licence",
+      "passed": true,
+      "detail": "licence OGL-UK-3.0; admissible: ['ODbL-1.0', 'OGL-UK-3.0']"
+    }
+  ]
+}

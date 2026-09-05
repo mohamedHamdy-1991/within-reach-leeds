@@ -1,0 +1,28 @@
+{
+  "phase": 3,
+  "date": "2026-09-05",
+  "unit_tests": "8/8 PASS (immutable download, size cap, PBF header, geojson bbox/CRS, freshness, licence, quarantine, release immutability + checksum mismatch rejection)",
+  "real_acquisition": {
+    "osm": {
+      "source": "Geofabrik west-yorkshire-latest.osm.pbf",
+      "bytes": 53683499,
+      "sha256_in_report": true,
+      "publisher_md5_verified": true,
+      "gates": ["osm_pbf_header", "freshness", "licence"],
+      "outcome": "RELEASED as candidate: data/releases/osm-west-yorkshire-2026-09-05-candidate",
+      "validator_bug_found_and_fixed": "PBF header check rewritten (was checking ASCII 'OSM' tag; correct check is big-endian blob length + OSMHeader blob)"
+    },
+    "leeds_prow": {
+      "source": "Data Mill North Rec_Routes.zip (PRW working copy)",
+      "publisher_last_modified": "2025-03-20T19:54:41Z",
+      "outcome": "QUARANTINED (data age ~533 days > 365-day policy) — A11 demonstrated on real data",
+      "note": "matches register status candidate_stale_warning"
+    }
+  },
+  "acceptance_evidence": {
+    "A10": "every raw version carries retrieval.json (url, timestamp, sha256, bytes); releases carry RELEASE_MANIFEST.json with verified checksums + licence + retrieval metadata",
+    "A11": "quarantined versions are moved out of raw and cannot be published (unit test + two real quarantine paths); tampered payload rejected by checksum mismatch (unit test)"
+  },
+  "deferred": ["A17 attribution completes with map surfaces in Phase 4/5", "GeoPandas CRS/geometry deep validation when PostGIS publish lands (Phase 4)"],
+  "blockers": []
+}

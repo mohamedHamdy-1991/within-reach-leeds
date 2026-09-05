@@ -1,0 +1,9 @@
+.venv/bin/python -m pytest pipelines -q          # 8/8 PASS
+.venv/bin/python scripts/acquire_osm_west_yorkshire.py
+  -> run 1/2: infrastructure failures (module path, /usr/bin/md5 absent) — no data impact
+  -> run 3 (payload already immutable-stored): gates ran, validator bug caught (PBF header check) -> QUARANTINED
+  -> validator FIXED (blob-header OSMHeader check) + unit test updated (8/8)
+  -> run 4: RELEASED data/releases/osm-west-yorkshire-2026-09-05-candidate (51.6 MB, publisher md5 verified)
+/tmp/acquire_prow.py (Data Mill North Rec_Routes.zip via pipeline gates)
+  -> shapefile_zip PASS, licence PASS, data_age FAIL (publisher last-modified 2025-03-20, ~533 days > 365 policy)
+  -> QUARANTINED data/quarantine/leeds_prow/rec-routes-2026-09-05 (A11 evidence)
