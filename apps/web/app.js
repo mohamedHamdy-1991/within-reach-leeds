@@ -28,7 +28,27 @@
     data: () => `<h2 id="task-title">What the data can tell you</h2><p class="lead">The page uses the existing Leeds source register. No live accessibility release is active yet.</p><ul class="source-list" id="source-list"><li><span>Loading source register…</span></li></ul><div class="inline-warning">Old official data is not automatically current. Quarantined sources cannot appear in live results.</div>`
   };
 
+  const mapModes = {
+    reach: { heading: 'Leeds comfortable reach', title: 'Reach preview', state: 'Personalised', legend:['Standard reach','Your reach'], steps: [['Starting point','Set a place or use your location'],['Standard reach','Average network boundary'],['Your reach','Adjusted by journey preferences']] },
+    route: { heading: 'Leeds route comparison', title: 'Route preview', state: 'Two options', legend:['Fastest','Easier'], steps: [['Starting point','Set a place or use your location'],['Easier route','Blue line explains the trade-offs'],['Destination','Waiting for validated route data']] },
+    need: { heading: 'Places near your reach', title: 'Place search', state: 'Known data', legend:['Search area','Known places'], steps: [['Choose a need','Seat, toilet, service or support'],['Check evidence','Source, freshness and confidence'],['Compare a route','Nearest by route cost when available']] },
+    park: { heading: 'Leeds park matching', title: 'Park preview', state: 'Requirements', legend:['Your reach','Park match'], steps: [['Choose features','Paths, benches, toilets and parking'],['Review unknowns','Missing details stay visible'],['Compare access','Use an evidence-backed entrance']] }
+  };
+
   const announce = (message) => { status.textContent = ''; requestAnimationFrame(() => { status.textContent = message; }); };
+
+  function setMapMode(name) {
+    const mode = mapModes[name];
+    if (!mode) return;
+    document.body.dataset.mapMode = name;
+    qs('#map-heading').textContent = mode.heading;
+    qs('#journey-card-title').textContent = mode.title;
+    qs('#journey-card-state').textContent = mode.state;
+    qs('#legend-one').textContent = mode.legend[0];
+    qs('#legend-two').textContent = mode.legend[1];
+    qs('#journey-steps').innerHTML = mode.steps.map((step, index) => `<li><i></i><span><strong>${step[0]}</strong><small>${step[1]}</small></span></li>`).join('');
+    qsa('.home-tabs button').forEach(button => button.classList.toggle('active', button.dataset.task === name));
+  }
 
   function openTask(name, trigger) {
     const render = templates[name] || templates.reach;
@@ -36,6 +56,7 @@
     taskContent.innerHTML = render();
     taskPanel.hidden = false;
     shell.classList.add('task-open');
+    setMapMode(name);
     qsa('.rail-link').forEach(button => button.classList.toggle('is-active', button.dataset.task === name));
     if (name === 'data') renderSources();
     qs('#task-title', taskPanel)?.focus?.();
@@ -178,6 +199,7 @@
   });
 
   loadDataStatus();
+  setMapMode('reach');
   if (window.matchMedia('(max-width: 960px)').matches) {
     qs('#menu-toggle').setAttribute('aria-expanded', 'false');
     qs('#menu-toggle').setAttribute('aria-label', 'Open navigation');

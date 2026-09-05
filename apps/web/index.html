@@ -129,15 +129,20 @@
           <g class="map-minor"><path d="M126 146 350 88 599 126 790 251"/><path d="M84 392 289 345 464 382 679 323 842 354"/><path d="M249 47 285 202 376 414 351 688"/><path d="M570 25 541 181 607 393 565 730"/><path d="M15 554 258 536 441 560 643 535 875 579"/></g>
           <path class="standard-field" d="M320 103C496 69 681 176 703 354c25 200-112 337-304 337-177 0-308-119-285-291 24-176 41-264 206-297Z"/>
           <path class="comfort-field" id="comfort-field" d="M341 184c124-19 254 61 262 184 9 138-85 230-222 226-124-4-209-89-193-207 18-125 39-185 153-203Z"/>
+          <path class="demo-route route-fast" d="M192 592 269 541 319 464 392 368 477 316 566 235 704 188"/>
+          <path class="demo-route route-easy" d="M192 592 252 568 338 529 407 454 392 368 501 341 566 235 704 188"/>
+          <path class="park-focus" d="M589 500c91-34 166 11 173 77s-58 111-142 105-126-58-105-112 35-55 74-70Z"/>
           <g class="preview-pins"><circle cx="392" cy="368" r="9"/><circle cx="291" cy="442" r="7"/><circle cx="507" cy="285" r="7"/><circle cx="483" cy="508" r="7"/></g>
+          <g class="route-points"><circle cx="192" cy="592" r="11"/><circle cx="704" cy="188" r="11"/></g>
+          <g class="need-halos"><circle cx="291" cy="442" r="22"/><circle cx="507" cy="285" r="22"/><circle cx="483" cy="508" r="22"/></g>
           <g class="origin"><circle cx="392" cy="368" r="20"/><circle cx="392" cy="368" r="7"/></g>
         </svg>
-        <div class="map-legend" aria-hidden="true"><span><i class="line standard"></i>Standard reach</span><span><i class="line comfort"></i>Your reach</span></div>
+        <div class="map-legend" aria-hidden="true"><span><i class="line standard"></i><b id="legend-one">Standard reach</b></span><span><i class="line comfort"></i><b id="legend-two">Your reach</b></span></div>
         <p class="preview-warning">Preview geometry only — live routing is not connected.</p>
         <aside class="journey-card" aria-label="Journey analysis preview">
-          <div class="journey-card-head"><span>Journey preview</span><strong>Data-aware</strong></div>
+          <div class="journey-card-head"><span id="journey-card-title">Journey preview</span><strong id="journey-card-state">Data-aware</strong></div>
           <div class="journey-tabs" aria-hidden="true"><span>Overview</span><span class="active">Route</span><span>Confidence</span></div>
-          <ol class="journey-steps">
+          <ol class="journey-steps" id="journey-steps">
             <li><i></i><span><strong>Your starting point</strong><small>Set a place or use your location</small></span></li>
             <li><i></i><span><strong>Comfort analysis</strong><small>Steps, hills, surfaces and rest gaps</small></span></li>
             <li><i></i><span><strong>Your chosen place</strong><small>Waiting for validated route data</small></span></li>
