@@ -7,3 +7,9 @@
 6. Fresh council datasets to release PRW, crossings, safe places, changing places (PRW quarantined at 533 days).
 7. DEM (OS Terrain 50) download + gradient factors (A05 completion) and route Rest Gap UI wiring.
 8. Docker/colima: VM disk remains on internal disk for images only; ALL data volumes are on the SSD (verified).
+
+## 2026-09-06 — PUBLISHED
+- Repo PUBLIC at https://github.com/mohamedHamdy-1991/within-reach-leeds (Mohamed's explicit instruction "push it to github and make it public").
+- Pre-public hardening (commit 8d04e69 + follow-up): CI + data-refresh workflows → workflow_dispatch-only (zero Actions minutes, per standing rule); data payload BINARIES untracked (51 MB OSM PBF, DMN files) — manifests, checksums, retrieval + quarantine JSONs remain in git; .env never tracked (dev password placeholder stays local).
+- Known: ~88 MB history includes the OSM blob (GitHub accepted; harmless). Large-file warning acknowledged.
+- STILL AUTHOR-DECISION: repository LICENCE file not added — publishing without one = default copyright (no reuse rights granted). Choose MIT/Apache/OGL when ready (AUTHOR_DECISION_REQUIRED).
