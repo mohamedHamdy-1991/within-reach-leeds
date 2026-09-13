@@ -68,15 +68,34 @@ async def places(latitude: float, longitude: float, category: str | None, limit:
 
 
 async def geocode(q: str, limit: int) -> dict[str, Any]:
+    """Google-Maps-style ranking: prefix matches first, then word-prefix,
+    then substring, then fuzzy trigram. Best hint is always the first row."""
     rows = await fetch_all(
         """
-        SELECT name, kind, ST_Y(geom) AS latitude, ST_X(geom) AS longitude
+        SELECT name, kind, ST_Y(geom) AS latitude, ST_X(geom) AS longitude,
+               CASE
+                 WHEN replace(upper(name), ' ', '') = replace(upper(:q), ' ', '')  THEN 0
+                 WHEN replace(upper(name), ' ', '') LIKE replace(upper(:q), ' ', '') || '%' THEN 1
+                 WHEN replace(upper(name), ' ', '') LIKE left(replace(upper(:q), ' ', ''), 4) || '%' THEN 2
+                 WHEN lower(name) = lower(:q)                        THEN 2
+                 WHEN lower(name) LIKE lower(:q) || '%'              THEN 3
+                 WHEN lower(name) LIKE '% ' || lower(:q) || '%'      THEN 4
+                 ELSE 5
+               END AS rank
         FROM wr.geocode_index
         WHERE name % :q
-        ORDER BY similarity(name, :q) DESC
+           OR lower(name) LIKE '%' || lower(:q) || '%'
+           OR replace(upper(name), ' ', '') LIKE '%' || replace(upper(:q), ' ', '') || '%'
+           OR replace(upper(name), ' ', '') LIKE left(replace(upper(:q), ' ', ''), 4) || '%'
+        ORDER BY rank ASC, similarity(name, :q) DESC, length(name) ASC
         LIMIT :limit
         """,
         {"q": q, "limit": limit},
     )
+    results = []
+    for row in rows:
+        item = dict(row)
+        item.pop("rank", None)
+        results.append(item)
     # Bounded by construction: geocode_index only contains in-bounds release features.
-    return {"results": [dict(r) for r in rows], "boundedTo": "leeds-release-index"}
+    return {"results": results, "boundedTo": "leeds-release-index"}

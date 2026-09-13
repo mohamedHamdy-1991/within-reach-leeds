@@ -20,6 +20,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test("map is full-screen with real tiles canvas and floating panels", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
     // The map canvas takes the whole viewport.
@@ -44,6 +45,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   });
 
   test("home → preferences → reach → results journey with real rings", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/");
     await page.getByRole("link", { name: "Preferences" }).click();
     await expect(page.getByRole("heading", { name: "How do you like to move?" })).toBeVisible();
@@ -77,6 +79,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   });
 
   test("panel minimises to the dock and restores", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/reach");
     await expect(page.getByText("How far can you go?")).toBeVisible();
     await page.getByRole("button", { name: "Minimise My Reach" }).click();
@@ -86,6 +89,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   });
 
   test("full map mode with Escape exit", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/");
     await page.getByRole("button", { name: "Open full screen map" }).click();
     await expect(page.getByRole("button", { name: "Exit full screen map" })).toBeVisible();
@@ -97,6 +101,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   });
 
   test("navigation rail expands and collapses with labelled state", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/");
     const toggle = page.getByRole("button", { name: "Collapse navigation" });
     await toggle.click();
@@ -106,6 +111,7 @@ test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", 
   });
 
   test("keyboard-only: skip link is first tab stop", async ({ page }) => {
+    test.skip(test.info().project.name === "mobile", "desktop-shell coverage");
     await page.goto("/");
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Skip to main content" })).toBeFocused();
@@ -161,10 +167,11 @@ test.describe("full-screen map shell — mobile 390×844", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
 
-    await page.getByRole("button", { name: "Use my current location" }).click();
+    await page.getByRole("button", { name: /Use my location/i }).click();
     await expect(page.getByRole("status")).toContainText("Enter a place or postcode instead", { timeout: 15_000 });
 
     await page.getByLabel("Start from a place or postcode").fill("LS1 3AD");
+    await page.keyboard.press("Escape"); // dismiss the suggestions dropdown, like a real user
     await page.getByRole("button", { name: /Where can I go\?/ }).click();
     await page.getByRole("button", { name: "use Park Square" }).click();
     await page.getByRole("button", { name: "Show my reach" }).click();

@@ -19,12 +19,15 @@ export type PopupTarget = {
  * All overlays (reach rings, personal ring, places, routes, origin) are
  * GeoJSON sources that scale and pan with the map.
  */
+let lastUserLocation: [number, number] | null = null;
+
 export function RealMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ctl = useMapController();
 
   const mapRef = useRef<maplibregl.Map | null>(null);
   const popupRef = useRef<maplibregl.Popup | null>(null);
+  const pickHandlerRef = useRef<((longitude: number, latitude: number) => void) | null>(null);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -47,6 +50,7 @@ export function RealMap() {
       attributionControl: false,
     });
     mapRef.current = map;
+    let pulseTimer: number | undefined;
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
     map.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-right");
     map.addControl(new maplibregl.AttributionControl({ compact: true }));
@@ -119,6 +123,70 @@ export function RealMap() {
         layout: { "line-join": "round", "line-cap": "round" },
       });
 
+      // User location (pulsing dot) + origin pin + dropped pick pin.
+      map.addSource("user-location", { type: "geojson", data: emptyFC() });
+      map.addLayer({
+        id: "user-loc-pulse", type: "circle", source: "user-location",
+        paint: {
+          "circle-radius": ["interpolate", ["linear"], ["coalesce", ["get", "phase"], 0], 0, 10, 1, 26],
+          "circle-color": "#2387C9",
+          "circle-opacity": ["interpolate", ["linear"], ["coalesce", ["get", "phase"], 0], 0, 0.5, 1, 0],
+        },
+      });
+      map.addLayer({
+        id: "user-loc-core", type: "circle", source: "user-location",
+        paint: {
+          "circle-radius": 7,
+          "circle-color": "#2387C9",
+          "circle-stroke-width": 3,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+
+      map.addSource("pin", { type: "geojson", data: emptyFC() });
+      map.addLayer({
+        id: "pin-shadow", type: "circle", source: "pin",
+        paint: { "circle-radius": 7, "circle-color": "rgba(23,23,23,0.25)", "circle-translate": [0, 4] },
+      });
+      map.addLayer({
+        id: "pin-head", type: "circle", source: "pin",
+        paint: {
+          "circle-radius": 13,
+          "circle-color": "#B42318",
+          "circle-stroke-width": 3.5,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+      map.addLayer({
+        id: "pin-core", type: "circle", source: "pin",
+        paint: { "circle-radius": 4.5, "circle-color": "#ffffff" },
+      });
+
+      // Pulse animation frames.
+      let frame = 0;
+      pulseTimer = window.setInterval(() => {
+        frame = (frame + 1) % 40;
+        const source = map.getSource("user-location") as maplibregl.GeoJSONSource | undefined;
+        if (source && lastUserLocation) {
+          const phase = frame / 40;
+          source.setData({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: { phase },
+                geometry: { type: "Point", coordinates: lastUserLocation },
+              },
+            ],
+          });
+        }
+      }, 60);
+
+      map.on("click", (event) => {
+        if (!pickHandlerRef.current) return;
+        pickHandlerRef.current(event.lngLat.lng, event.lngLat.lat);
+      });
+
       map.on("click", "places-dot", (event) => {
         const feature = event.features?.[0];
         if (!feature) return;
@@ -133,8 +201,10 @@ export function RealMap() {
     });
 
     return () => {
+      window.clearInterval(pulseTimer);
       map.remove();
       mapRef.current = null;
+      lastUserLocation = null;
     };
   }, []);
 
@@ -158,6 +228,39 @@ export function RealMap() {
     if (ctl.selectedPopup) showPopup(ctl.selectedPopup);
     else popupRef.current?.remove();
   }, [ctl.selectedPopup]);
+
+  useEffect(() => {
+    pickHandlerRef.current = ctl.pickMode
+      ? (longitude, latitude) => {
+          ctl.setPickMode(false);
+          ctl.setUserLocation([longitude, latitude]);
+        }
+      : null;
+  }, [ctl.pickMode, ctl]);
+
+  useEffect(() => {
+    lastUserLocation = ctl.userLocation;
+    const map = mapRef.current;
+    if (!map) return;
+    const source = map.getSource("user-location") as maplibregl.GeoJSONSource | undefined;
+    if (!source) return;
+    source.setData({
+      type: "FeatureCollection",
+      features:
+        ctl.userLocation && !ctl.pickMode
+          ? [
+              {
+                type: "Feature",
+                properties: { phase: 0 },
+                geometry: { type: "Point", coordinates: ctl.userLocation },
+              },
+            ]
+          : [],
+    });
+    if (ctl.userLocation && !ctl.pickMode) {
+      map.flyTo({ center: ctl.userLocation, zoom: Math.max(map.getZoom(), 14), duration: 900 });
+    }
+  }, [ctl.userLocation, ctl.pickMode]);
 
   function showPopup(target: PopupTarget) {
     const map = mapRef.current;

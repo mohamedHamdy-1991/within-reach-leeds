@@ -7,6 +7,7 @@ import { useMapController } from "../state/map";
 import { fetchReachRings, fetchPlaces } from "../api/client";
 import { computeReach, CATEGORY_LABELS, type CategoryId } from "../fixtures/synthetic";
 import { usePlacesOnMap, CATEGORY_COLORS } from "./Home";
+import { PlacePhoto } from "../components/PlacePhoto";
 import type { PlaceDto } from "../api/types";
 
 const TIME_OPTIONS = [5, 10, 15, 20, 30] as const;
@@ -282,11 +283,13 @@ export function ReachView({ initialTab = "plan" }: { initialTab?: Tab }) {
                           })
                         }
                       >
-                        <span>
+                        <PlacePhoto name={place.name} kind={place.kind} />
+                        <span className="place-row-main">
                           <strong>{place.name}</strong>
                           <small>{place.kind}{place.metres !== undefined ? ` · ~${Math.round(place.metres)} m` : ""}</small>
+                          <small className="place-row-meta">{place.source_id} · {place.retrieved_at}</small>
                         </span>
-                        <ConfidenceBadge label={place.confidence} meta={`${place.source_id} · ${place.retrieved_at}`} />
+                        <span className={`place-conf place-conf--${place.confidence}`}>{place.confidence}</span>
                       </button>
                     </li>
                   ))}

@@ -30,6 +30,11 @@ type MapController = {
   routes: Feature[];
   origin: [number, number] | null;
   selectedPopup: PopupTarget | null;
+  userLocation: [number, number] | null;
+  setUserLocation: (ll: [number, number] | null) => void;
+  pickMode: boolean;
+  setPickMode: (on: boolean) => void;
+  setPickHandler: (handler: ((longitude: number, latitude: number) => void) | null) => void;
   setRings: (features: Feature[]) => void;
   setPersonalRing: (features: Feature[]) => void;
   setPlaces: (features: Feature[], popupFor?: (props: PlaceFeatureProps) => PopupTarget | null) => void;
@@ -58,6 +63,11 @@ const MapContext = createContext<MapController>({
   routes: [],
   origin: null,
   selectedPopup: null,
+  userLocation: null,
+  setUserLocation: noop,
+  pickMode: false,
+  setPickMode: noop,
+  setPickHandler: noop,
   setRings: noop,
   setPersonalRing: noop,
   setPlaces: noop,
@@ -79,6 +89,9 @@ export function MapProvider({ children }: { children: ReactNode }) {
   const [origin, setOriginState] = useState<[number, number] | null>(null);
   const [selectedPopup, setSelectedPopup] = useState<PopupTarget | null>(null);
   const [textOverlay, setTextOverlay] = useState<ReactNode>(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [pickMode, setPickMode] = useState(false);
+  const pickHandlerRef = useRef<((longitude: number, latitude: number) => void) | null>(null);
   const popupForRef = useRef<((props: PlaceFeatureProps) => PopupTarget | null) | null>(null);
 
   const setPlaces = useCallback((features: Feature[], popupFor?: (props: PlaceFeatureProps) => PopupTarget | null) => {
@@ -96,6 +109,13 @@ export function MapProvider({ children }: { children: ReactNode }) {
       routes,
       origin,
       selectedPopup,
+      userLocation,
+      setUserLocation,
+      pickMode,
+      setPickMode,
+      setPickHandler: (handler) => {
+        pickHandlerRef.current = handler;
+      },
       setRings: (features) => setRingsState(features),
       setPersonalRing: (features) => setPersonalState(features),
       setPlaces,
@@ -121,7 +141,7 @@ export function MapProvider({ children }: { children: ReactNode }) {
       setTextOverlay,
       placePopupFor: popupForRef.current,
     }),
-    [ready, rings, personalRing, places, routes, origin, selectedPopup, textOverlay, setPlaces],
+    [ready, rings, personalRing, places, routes, origin, selectedPopup, textOverlay, userLocation, pickMode, setPlaces],
   );
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;

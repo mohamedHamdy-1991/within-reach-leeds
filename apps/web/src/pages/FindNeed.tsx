@@ -7,12 +7,12 @@ import { useMapController, placePopup } from "../state/map";
 import { fetchPlaces } from "../api/client";
 import type { PlaceDto } from "../api/types";
 import { usePlacesOnMap } from "./Home";
+import { PlacePhoto } from "../components/PlacePhoto";
 
 const NEEDS: { id: string; label: string; category: string | null; kind?: string; hint: string }[] = [
   { id: "toilet", label: "Toilet", category: "essentials", hint: "Publicly accessible toilets in the release" },
   { id: "changing", label: "Changing Places", category: "essentials", kind: "Changing Places toilet", hint: "Registered Changing Places (Feb 2019 council register)" },
   { id: "safe", label: "Safe Place", category: "support", kind: "Safe Place", hint: "Council Safe Places register (Feb 2019)" },
-  { id: "crossing", label: "Crossing", category: "support", kind: "Crossing", hint: "Controlled and push-button crossing sites" },
   { id: "seat", label: "Seat", category: "wellbeing", hint: "Benches and resting places" },
   { id: "green", label: "Green space", category: "wellbeing", kind: "Green space", hint: "Publicly accessible green spaces (PhD OGL outputs)" },
   { id: "pharmacy", label: "Pharmacy", category: "essentials", hint: "Pharmacies known to the release" },
@@ -125,14 +125,16 @@ export function FindNeed() {
                       announce(`${place.name} shown on the map`);
                     }}
                   >
-                    <span>
+                    <PlacePhoto name={place.name} kind={place.kind} />
+                    <span className="place-row-main">
                       <strong>{place.name}</strong>
                       <small>
                         {place.kind}
-                        {place.metres !== undefined ? ` · about ${Math.round(place.metres)} metres (straight line)` : ""}
+                        {place.metres !== undefined ? ` · ${Math.round(place.metres)} m` : ""}
                       </small>
+                      <small className="place-row-meta">{place.source_id} · {place.retrieved_at}</small>
                     </span>
-                    <ConfidenceBadge label={place.confidence} meta={`${place.source_id} · ${place.retrieved_at}`} />
+                    <span className={`place-conf place-conf--${place.confidence}`}>{place.confidence}</span>
                   </button>
                 </li>
               ))}

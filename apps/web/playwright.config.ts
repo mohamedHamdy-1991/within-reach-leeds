@@ -10,6 +10,7 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: "retain-on-failure",
+    contextOptions: { reducedMotion: "reduce" },
   },
   webServer: {
     command: `pnpm exec vite preview --port ${PORT} --strictPort`,

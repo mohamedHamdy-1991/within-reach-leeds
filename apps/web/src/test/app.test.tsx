@@ -76,7 +76,7 @@ describe("Home (P01)", () => {
     });
     const { container } = renderAt(<Home />);
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Use my current location" }));
+    await user.click(screen.getByRole("button", { name: /Use my location/i }));
     await waitFor(() =>
       expect(screen.getByRole("status")).toHaveTextContent("Location is off. Enter a place or postcode instead."),
     );
