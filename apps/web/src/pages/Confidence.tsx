@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import { useApp } from "../state/app";
 
 const LABELS: { id: string; title: string; body: string }[] = [
@@ -12,12 +13,15 @@ const LABELS: { id: string; title: string; body: string }[] = [
 export function Confidence() {
   const { dataStatus } = useApp();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("confidence-panel", "About data");
 
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
+    <section className="control-panel panel-right doc-panel" aria-labelledby="conf-title">
       <div className="page-sheet-head">
         <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
         <span className="panel-step">About data</span>
+        <MinimiseButton id="confidence-panel" title="About data" />
       </div>
       <h1>What the data can tell you</h1>
       <p className="lead">
@@ -63,6 +67,6 @@ export function Confidence() {
       <p>
         Full source details, licences and limitations: <a href="/about">About data, privacy and accessibility</a>.
       </p>
-    </div>
+    </section>
   );
 }

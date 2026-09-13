@@ -7,6 +7,7 @@ import "@within-reach/design-system/fonts.css";
 import "@within-reach/design-system/components.css";
 import "./styles/shell.css";
 import "./styles/app.css";
+import "./styles/glass.css";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Missing #root element");

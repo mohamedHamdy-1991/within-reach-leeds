@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import type { Preferences } from "../state/app";
 import { DEFAULT_PREFERENCES, useApp } from "../state/app";
 
@@ -14,17 +15,20 @@ const PRESETS: { id: string; label: string; partial: Partial<Preferences> }[] = 
 export function Preferences() {
   const { preferences, setPreferences, resetPreferences, announce } = useApp();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("prefs-panel", "Preferences");
   const [draft, setDraft] = useState<Preferences>(preferences);
 
   const update = (partial: Partial<Preferences>) => setDraft((d) => ({ ...d, ...partial }));
 
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
+    <section className="control-panel panel-right doc-panel" aria-labelledby="prefs-title">
       <div className="page-sheet-head">
         <button className="back-button" type="button" onClick={() => navigate("/")}>
           ← Back
         </button>
         <span className="panel-step">Journey choices</span>
+        <MinimiseButton id="prefs-panel" title="Preferences" />
       </div>
       <h1>How do you like to move?</h1>
       <p className="lead">
@@ -191,6 +195,6 @@ export function Preferences() {
           Reset
         </button>
       </div>
-    </div>
+    </section>
   );
 }

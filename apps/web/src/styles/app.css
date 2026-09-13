@@ -257,3 +257,22 @@ button.primary:not(:disabled):hover {
 @media (max-width: 960px) {
   .map-attribution { display: none; }
 }
+
+/* --- Live map UI additions (glass shell) --- */
+.journey-tabs-live{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:rgba(23,23,23,.08);border-radius:10px;margin:0 0 12px}
+.journey-tabs-live button{min-height:40px;border:0;border-radius:8px;background:transparent;font-weight:800;cursor:pointer}
+.journey-tabs-live button[aria-selected="true"]{background:var(--signal);color:#171717}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.filter-chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:4px 12px;border:1.5px solid var(--rule);border-radius:999px;background:#fff;font-weight:700;font-size:.85rem;cursor:pointer}
+.filter-chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.filter-chip[aria-pressed="false"]{opacity:.45}
+.place-results{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.place-row-button{width:100%;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;text-align:left;padding:9px 10px;border:1px solid var(--rule);border-radius:10px;background:#fff;cursor:pointer;min-height:48px}
+.place-row-button:hover{border-color:#b18d00;background:#fffbeb}
+.place-row-button small{display:block;color:var(--muted);font-size:.8rem}
+.factor-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.85rem}
+.factor-table th,.factor-table td{border-top:1px solid var(--rule);padding:7px 6px;text-align:left;vertical-align:top}
+.route-option{border-top:1px solid var(--rule);margin-top:10px;padding-top:4px}
+.panel-bar .back-button{min-height:40px}
+.park-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.doc-panel .glass-panel__body h1{font-size:1.3rem;margin:6px 0 8px}

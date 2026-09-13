@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import { ConfidenceBadge, EmptyState, LoadingState, SafetyNotice } from "@within-reach/design-system";
 import { useApp } from "../state/app";
+import { useMapController, placePopup } from "../state/map";
 import { fetchPlaces } from "../api/client";
 import type { PlaceDto } from "../api/types";
+import { usePlacesOnMap } from "./Home";
 
 const NEEDS: { id: string; label: string; category: string | null; kind?: string; hint: string }[] = [
   { id: "toilet", label: "Toilet", category: "essentials", hint: "Publicly accessible toilets in the release" },
@@ -19,13 +22,22 @@ const NEEDS: { id: string; label: string; category: string | null; kind?: string
 
 export function FindNeed() {
   const { origin, dataStatus, announce } = useApp();
+  const ctl = useMapController();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("find-panel", "I need something");
   const [need, setNeed] = useState<string | null>(null);
-  const [places, setPlaces] = useState<PlaceDto[] | null>(null);
+  const [places, setPlacesState] = useState<PlaceDto[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  usePlacesOnMap(places);
+
   const effectiveOrigin = origin ?? { label: "Park Square, Leeds (example)", latitude: 53.8008, longitude: -1.5491 };
+
+  useEffect(() => {
+    ctl.clearOverlays(["origin", "rings", "personal", "routes"]);
+    ctl.setOrigin([effectiveOrigin.longitude, effectiveOrigin.latitude]);
+  }, []);
 
   useEffect(() => {
     if (!need) return;
@@ -34,83 +46,104 @@ export function FindNeed() {
     setError(null);
     fetchPlaces(effectiveOrigin.latitude, effectiveOrigin.longitude, selected?.category ?? null, 15, selected?.kind)
       .then((results) => {
-        setPlaces(results);
+        setPlacesState(results);
         announce(`${results.length} known places found`);
       })
       .catch((exc: Error) => {
         setError(exc.message);
-        setPlaces([]);
+        setPlacesState([]);
       })
       .finally(() => setLoading(false));
-  }, [need, effectiveOrigin.latitude, effectiveOrigin.longitude, announce]);
+  }, [need]);
 
+  useEffect(() => {
+    ctl.setTextOverlay(
+      places ? (
+        <ol>
+          {places.map((place) => (
+            <li key={place.external_id}>
+              <strong>{place.name}</strong> — {place.kind}
+              {place.metres !== undefined ? `, about ${Math.round(place.metres)} m` : ""}.{" "}
+              <ConfidenceBadge label={place.confidence} meta={`${place.source_id} · ${place.retrieved_at}`} />
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>Choose a need to see the nearest known places.</p>
+      ),
+    );
+  }, [places]);
+
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
-      <div className="page-sheet-head">
+    <section className="control-panel panel-right" aria-labelledby="find-title">
+      <div className="panel-bar">
         <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
-        <span className="panel-step">I need something</span>
+        <strong id="find-title">I need something</strong>
+        <MinimiseButton id="find-panel" title="I need something" />
       </div>
-      <h1>What do you need?</h1>
-      <p className="lead">
-        Starting from <strong>{effectiveOrigin.label}</strong>. Results are the nearest KNOWN places in
-        the active release — we never invent one.
-      </p>
+      <div className="glass-panel__body">
+        <p className="lead" style={{ marginTop: 0 }}>
+          Starting from <strong>{effectiveOrigin.label}</strong>. Results are the nearest KNOWN places —
+          we never invent one. Click a row to open it on the map.
+        </p>
 
-      <div className="task-list find-needs" role="group" aria-label="Choose what you need">
-        {NEEDS.map((item) => (
-          <button
-            key={item.id}
-            className="task"
-            type="button"
-            aria-pressed={need === item.id}
-            onClick={() => setNeed(item.id)}
-          >
-            <span>
-              <strong>{item.label}</strong>
-              <small>{item.hint}</small>
-            </span>
-          </button>
-        ))}
+        <div className="task-list find-needs" role="group" aria-label="Choose what you need">
+          {NEEDS.map((item) => (
+            <button key={item.id} className="task" type="button" aria-pressed={need === item.id} onClick={() => setNeed(item.id)}>
+              <span>
+                <strong>{item.label}</strong>
+                <small>{item.hint}</small>
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {need && loading && <LoadingState message="Checking the data release" />}
+
+        {need && error && (
+          <EmptyState
+            message={`We couldn't check the data release (${error}). Nothing is shown rather than a guessed list.`}
+            action={<button className="text-button" type="button" onClick={() => setNeed(null)}>Try again</button>}
+          />
+        )}
+
+        {need && !loading && !error && places && places.length === 0 && (
+          <EmptyState message="No known places of this kind inside 2 km of your starting point. That is an honest empty result, not an error." />
+        )}
+
+        {need && !loading && !error && places && places.length > 0 && (
+          <section aria-label="Nearest known places">
+            <ol className="place-results">
+              {places.map((place) => (
+                <li key={place.external_id}>
+                  <button
+                    type="button"
+                    className="place-row-button"
+                    onClick={() => {
+                      ctl.openPopup(placePopup(place));
+                      announce(`${place.name} shown on the map`);
+                    }}
+                  >
+                    <span>
+                      <strong>{place.name}</strong>
+                      <small>
+                        {place.kind}
+                        {place.metres !== undefined ? ` · about ${Math.round(place.metres)} metres (straight line)` : ""}
+                      </small>
+                    </span>
+                    <ConfidenceBadge label={place.confidence} meta={`${place.source_id} · ${place.retrieved_at}`} />
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <SafetyNotice title="Before you set out">
+              Opening hours and current status are not in the active release. Check before travelling.
+              {dataStatus.dataReleaseId ? ` Data releases: ${dataStatus.dataReleaseId}.` : ""}
+            </SafetyNotice>
+          </section>
+        )}
       </div>
-
-      {need && loading && <LoadingState message="Checking the data release" />}
-
-      {need && error && (
-        <EmptyState
-          message={`We couldn't check the data release (${error}). Nothing is shown rather than a guessed list.`}
-          action={<button className="text-button" type="button" onClick={() => setNeed(null)}>Try again</button>}
-        />
-      )}
-
-      {need && !loading && !error && places && places.length === 0 && (
-        <EmptyState message="No known places of this kind inside 2 km of your starting point. That is an honest empty result, not an error." />
-      )}
-
-      {need && !loading && !error && places && places.length > 0 && (
-        <section aria-label="Nearest known places">
-          <ol className="place-results">
-            {places.map((place) => (
-              <li key={place.external_id}>
-                <span>
-                  <strong>{place.name}</strong>
-                  <small>
-                    {place.kind}
-                    {place.metres !== undefined ? ` · about ${Math.round(place.metres)} metres (straight line)` : ""}
-                  </small>
-                </span>
-                <ConfidenceBadge
-                  label={place.confidence}
-                  meta={`${place.source_id} · ${place.retrieved_at}`}
-                />
-              </li>
-            ))}
-          </ol>
-          <SafetyNotice title="Before you set out">
-            Opening hours and current status are not in the active release. Check before travelling.
-            {dataStatus.dataReleaseId ? ` Data release: ${dataStatus.dataReleaseId}.` : ""}
-          </SafetyNotice>
-        </section>
-      )}
-    </div>
+    </section>
   );
 }

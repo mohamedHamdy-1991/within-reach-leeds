@@ -48,9 +48,9 @@ class ValhallaClient:
             "route": data,
         }
 
-    async def reach(self, latitude: float, longitude: float, minutes: int) -> dict[str, Any]:
+    async def reach(self, latitude: float, longitude: float, minutes: list[int]) -> dict[str, Any]:
         payload = {
-            "contours": [{"time": minutes}],
+            "contours": [{"time": m} for m in minutes],
             "costing": "pedestrian",
             "locations": [{"lat": latitude, "lon": longitude}],
             "polygons": True,
@@ -67,6 +67,7 @@ class ValhallaClient:
         return {
             "scoringVersion": SCORING_VERSION,
             "kind": "standard_reach",
+            "contours": minutes,
             "note": "Standard pedestrian reach. Personal comfortable reach applies preference factors on top of this geometry.",
             "geometry": response.json(),
         }

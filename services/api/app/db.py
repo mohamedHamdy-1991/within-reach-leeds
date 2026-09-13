@@ -22,7 +22,13 @@ def get_engine() -> AsyncEngine:
     if _engine is None or _engine_loop != loop_id:
         if _engine is not None:
             _engine.sync_engine.dispose()
-        _engine = create_async_engine(settings.database_url, pool_pre_ping=True)
+        _engine = create_async_engine(
+            settings.database_url,
+            pool_pre_ping=True,
+            pool_size=10,
+            max_overflow=20,
+            pool_timeout=60,
+        )
         _engine_loop = loop_id
     return _engine
 

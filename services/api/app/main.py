@@ -155,12 +155,19 @@ def create_app(*, db: Any = _UNSET, valhalla: Any = _UNSET) -> FastAPI:
         return await state["valhalla"].route(body.waypoints, body.costing, body.preferences)
 
     @app.post("/api/v1/reach")
-    async def reach(request: Request, body: BoundsChecked, minutes: int = Query(default=20, ge=5, le=30)) -> dict[str, Any]:
+    async def reach(request: Request, body: BoundsChecked, minutes: str = Query(default="20")) -> dict[str, Any]:
         _require_rate(request, limiter, request.client.host if request.client else "anon")
         _require_bounds(body.latitude, body.longitude)
+        # minutes: comma-separated list, e.g. "5,10,15,20,30" (max 6 rings).
+        try:
+            minutes_list = sorted({max(1, min(60, int(m))) for m in minutes.split(",") if m.strip()})[:6]
+        except ValueError:
+            raise HTTPException(status_code=422, detail="minutes must be integers, e.g. 5,10,20")
+        if not minutes_list:
+            raise HTTPException(status_code=422, detail="at least one minute value is required")
         if state["valhalla"] is None:
             raise HTTPException(status_code=503, detail="Router unavailable; reach is not shown rather than guessed.")
-        return await state["valhalla"].reach(body.latitude, body.longitude, minutes)
+        return await state["valhalla"].reach(body.latitude, body.longitude, minutes_list)
 
     def _require_bounds(latitude: float, longitude: float) -> None:
         if not bounds_ok(latitude, longitude):

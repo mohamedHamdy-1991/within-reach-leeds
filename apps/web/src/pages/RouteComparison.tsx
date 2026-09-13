@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import { SafetyNotice } from "@within-reach/design-system";
 import { useApp } from "../state/app";
-import { fetchRoute } from "../api/client";
+import { useMapController } from "../state/map";
+import { fetchRoute, geocode } from "../api/client";
 import type { RouteOptionSummary } from "../api/types";
 
 const FACTOR_LABELS: Record<string, string> = {
@@ -15,7 +17,9 @@ const FACTOR_LABELS: Record<string, string> = {
 
 export function RouteComparison() {
   const { origin, announce } = useApp();
+  const ctl = useMapController();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("route-panel", "Take me there");
   const [destination, setDestination] = useState("");
   const [options, setOptions] = useState<RouteOptionSummary[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -23,6 +27,42 @@ export function RouteComparison() {
   const [showAll, setShowAll] = useState(false);
 
   const effectiveOrigin = origin ?? { label: "Park Square, Leeds (example)", latitude: 53.8008, longitude: -1.5491 };
+
+  useEffect(() => {
+    ctl.clearOverlays(["origin", "places"]);
+    ctl.setOrigin([effectiveOrigin.longitude, effectiveOrigin.latitude]);
+  }, []);
+
+  useEffect(() => {
+    ctl.setTextOverlay(
+      <div>
+        {options ? (
+          <>
+            <p>Two route options between {effectiveOrigin.label} and your destination.</p>
+            {options.map((option) => (
+              <div key={option.id}>
+                <h4>{option.label}</h4>
+                <p>
+                  {option.timeMinutes !== null ? `${option.timeMinutes} minutes` : "Time unavailable"}
+                  {option.distanceMetres !== null ? ` · ${option.distanceMetres} metres` : ""}
+                </p>
+                <ul>
+                  {option.factors.map((factor) => (
+                    <li key={factor.factor}>
+                      {FACTOR_LABELS[factor.factor] ?? factor.factor}: {factor.status === "unknown" ? "Unknown — " : ""}
+                      {factor.explanation}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p>Compare routes to draw the fastest and easier options on the map.</p>
+        )}
+      </div>,
+    );
+  }, [options]);
 
   const compare = async () => {
     if (!destination.trim()) {
@@ -32,17 +72,21 @@ export function RouteComparison() {
     setLoading(true);
     setError(null);
     try {
-      // Phase 5: the destination is geocoded server-side in the release index;
-      // until geocode is wired to the form, use the Leeds centre as the demo destination.
-      const results = await fetchRoute(
+      const hits = await geocode(destination, 1);
+      const hit = hits[0];
+      const destinationPoint = hit
+        ? { latitude: hit.latitude, longitude: hit.longitude }
+        : { latitude: 53.7959, longitude: -1.5444 };
+      const { options: resultOptions, lines } = await fetchRoute(
         [
           { latitude: effectiveOrigin.latitude, longitude: effectiveOrigin.longitude },
-          { latitude: 53.7959, longitude: -1.5444 },
+          destinationPoint,
         ],
         null,
       );
-      setOptions(results);
-      announce(`${results.length} route options compared`);
+      setOptions(resultOptions);
+      ctl.setRoutes(lines);
+      announce(`${resultOptions.length} route options compared`);
     } catch (exc) {
       setError((exc as Error).message);
       setOptions(null);
@@ -51,19 +95,20 @@ export function RouteComparison() {
     }
   };
 
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
-      <div className="page-sheet-head">
+    <section className="control-panel panel-right" aria-labelledby="route-title">
+      <div className="panel-bar">
         <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
-        <span className="panel-step">Take me there</span>
+        <strong id="route-title">Take me there</strong>
+        <MinimiseButton id="route-panel" title="Take me there" />
       </div>
-      <h1>Compare routes</h1>
-      <p className="lead">
-        From <strong>{effectiveOrigin.label}</strong>. The fastest option and an easier option are
-        compared with the factors that matter — never a single unexplained score.
-      </p>
+      <div className="glass-panel__body">
+        <p className="lead" style={{ marginTop: 0 }}>
+          From <strong>{effectiveOrigin.label}</strong>. Fastest vs easier — with the factors that matter,
+          never a single unexplained score.
+        </p>
 
-      <div className="pref-group">
         <label className="panel-label" htmlFor="route-dest">Destination</label>
         <input
           id="route-dest"
@@ -75,55 +120,51 @@ export function RouteComparison() {
         <button className="primary" type="button" onClick={compare} disabled={loading}>
           {loading ? "Comparing…" : "Compare routes"}
         </button>
+
+        {error && (
+          <div className="inline-warning" role="alert">
+            {error} No route is shown rather than a guessed one.
+          </div>
+        )}
+
+        {options && options.length > 0 && (
+          <section aria-label="Route options">
+            {options.map((option) => (
+              <article key={option.id} className="route-option">
+                <header>
+                  <h2 style={{ fontSize: "1.05rem", margin: "10px 0 2px" }}>{option.label}</h2>
+                  <p style={{ margin: 0 }}>
+                    {option.timeMinutes !== null ? `${option.timeMinutes} minutes` : "Time unavailable"}
+                    {option.distanceMetres !== null ? ` · ${option.distanceMetres} metres` : ""}
+                  </p>
+                </header>
+                <table className="factor-table">
+                  <thead>
+                    <tr><th scope="col">Factor</th><th scope="col">What we know</th></tr>
+                  </thead>
+                  <tbody>
+                    {option.factors
+                      .filter((factor) => showAll || factor.status !== "known_ok")
+                      .map((factor) => (
+                        <tr key={factor.factor}>
+                          <th scope="row">{FACTOR_LABELS[factor.factor] ?? factor.factor}</th>
+                          <td>{factor.status === "unknown" ? "Unknown — " : ""}{factor.explanation}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </article>
+            ))}
+            <button className="text-button" type="button" aria-expanded={showAll} onClick={() => setShowAll((v) => !v)}>
+              {showAll ? "Show only open questions" : "Compare all factors"}
+            </button>
+            <SafetyNotice title="Plan, don't navigate">
+              Conditions can change; check the route and surroundings. Route data is mapped, not verified,
+              and per-step evidence is not yet loaded.
+            </SafetyNotice>
+          </section>
+        )}
       </div>
-
-      {error && (
-        <div className="inline-warning" role="alert">
-          {error} No route is shown rather than a guessed one.
-        </div>
-      )}
-
-      {options && options.length > 0 && (
-        <section aria-label="Route options">
-          {options.map((option) => (
-            <article key={option.id} className="route-option">
-              <header>
-                <h2>{option.label}</h2>
-                <p>
-                  {option.timeMinutes !== null ? `${option.timeMinutes} minutes` : "Time unavailable"}
-                  {option.distanceMetres !== null ? ` · ${option.distanceMetres} metres` : ""}
-                </p>
-              </header>
-              <table className="factor-table">
-                <caption className="sr-only-caption">Factors for the {option.label} option</caption>
-                <thead>
-                  <tr><th scope="col">Factor</th><th scope="col">What we know</th></tr>
-                </thead>
-                <tbody>
-                  {option.factors
-                    .filter((factor) => showAll || factor.status !== "known_ok")
-                    .map((factor) => (
-                      <tr key={factor.factor}>
-                        <th scope="row">{FACTOR_LABELS[factor.factor] ?? factor.factor}</th>
-                        <td>
-                          {factor.status === "unknown" ? "Unknown — " : ""}
-                          {factor.explanation}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </article>
-          ))}
-          <button className="text-button" type="button" aria-expanded={showAll} onClick={() => setShowAll((v) => !v)}>
-            {showAll ? "Show only open questions" : "Compare all factors"}
-          </button>
-          <SafetyNotice title="Plan, don't navigate">
-            Conditions can change; check the route and surroundings. Route data in this release is
-            mapped, not verified, and per-step evidence is not yet loaded.
-          </SafetyNotice>
-        </section>
-      )}
-    </div>
+    </section>
   );
 }

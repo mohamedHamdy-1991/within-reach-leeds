@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import { useApp } from "../state/app";
 
 export function About() {
   const { dataStatus } = useApp();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("about-panel", "About");
 
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
+    <section className="control-panel panel-right doc-panel" aria-labelledby="about-title">
       <div className="page-sheet-head">
         <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
         <span className="panel-step">About</span>
+        <MinimiseButton id="about-panel" title="About" />
       </div>
       <h1>About data, privacy and accessibility</h1>
 
@@ -70,6 +74,6 @@ export function About() {
           <li>Route results are planning assistance, not a guarantee of safety or accessibility.</li>
         </ul>
       </section>
-    </div>
+    </section>
   );
 }

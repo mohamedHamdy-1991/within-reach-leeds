@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePanelDock, MinimiseButton } from "../components/GlassPanel";
 import { useApp } from "../state/app";
 
 export function Settings() {
   const { preferences, resetPreferences, announce } = useApp();
   const navigate = useNavigate();
+  const { minimized: panelMinimized } = usePanelDock("settings-panel", "Settings");
   const [permission, setPermission] = useState<string>("unknown");
   const [recentPlaces, setRecentPlaces] = useState(false);
 
@@ -28,11 +30,13 @@ export function Settings() {
     announce("Local data deleted. Preferences are back to defaults.");
   };
 
+  if (panelMinimized) return null;
   return (
-    <div className="page-sheet">
+    <section className="control-panel panel-right doc-panel" aria-labelledby="settings-title">
       <div className="page-sheet-head">
         <button className="back-button" type="button" onClick={() => navigate("/")}>← Back</button>
         <span className="panel-step">Settings</span>
+        <MinimiseButton id="settings-panel" title="Settings" />
       </div>
       <h1>Settings</h1>
 
@@ -85,6 +89,6 @@ export function Settings() {
         <button type="button" onClick={deleteLocalData}>Delete local data</button>
         <p className="field-help">Removes preferences and any session data stored on this device.</p>
       </section>
-    </div>
+    </section>
   );
 }

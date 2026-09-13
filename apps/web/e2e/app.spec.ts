@@ -10,53 +10,89 @@ async function axeScan(page: Page): Promise<void> {
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag22aa"])
     .analyze();
-  expect(results.violations, JSON.stringify(results.violations.map((v) => ({ id: v.id, nodes: v.nodes.length })))).toEqual([]);
+  expect(
+    results.violations,
+    JSON.stringify(results.violations.map((v) => ({ id: v.id, nodes: v.nodes.length }))),
+  ).toEqual([]);
 }
 
-test.describe("seven-journey shell (A03/A12/A20) — desktop 1440×900", () => {
+test.describe("full-screen real map shell (A03/A12/A20) — desktop 1440×900", () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test("home → preferences → reach → results journey", async ({ page }) => {
+  test("map is full-screen with real tiles canvas and floating panels", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
+    // The map canvas takes the whole viewport.
+    const canvas = page.locator(".maplibregl-canvas");
+    await expect(canvas).toBeVisible({ timeout: 20_000 });
+    const box = await canvas.boundingBox();
+    expect(box?.width).toBeGreaterThan(1200);
+    expect(box?.height).toBeGreaterThan(800);
+    // Panels float: rail + task panel + toolbar all present over the map.
+    await expect(page.locator(".rail-float")).toBeVisible();
+    await expect(page.locator(".map-topbar")).toBeVisible();
 
-    // All four primary actions immediately available.
     for (const action of ["Where can I go?", "Take me there", "I need something", "Find a park"]) {
       await expect(page.getByRole("button", { name: new RegExp(action) })).toBeVisible();
     }
-    // Data status: live API when up, otherwise the source-register fallback.
     await expect(
       page.getByText(/Live API connected|Leeds source register loaded/).first(),
     ).toBeVisible({ timeout: 15_000 });
+
     await axeScan(page);
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "desktop-home.png"), fullPage: false });
+  });
 
-    // Preferences journey.
+  test("home → preferences → reach → results journey with real rings", async ({ page }) => {
+    await page.goto("/");
     await page.getByRole("link", { name: "Preferences" }).click();
     await expect(page.getByRole("heading", { name: "How do you like to move?" })).toBeVisible();
     await page.getByText("Brisk").click();
     await page.getByRole("button", { name: "Save preferences" }).click();
 
-    // My Reach journey with example origin (location never requested).
+    // Real isochrone requests go out as soon as the reach view mounts.
+    const reachResponse = page.waitForResponse((response) => response.url().includes("/api/v1/reach"));
     await page.goto("/reach");
-    await page.getByRole("button", { name: "Use the example place" }).click();
+    await page.getByRole("button", { name: "use Park Square" }).click();
+    await reachResponse;
     await page.getByRole("button", { name: "Show my reach" }).click();
-    await expect(page.getByRole("heading", { name: /comfortable minutes from/ })).toBeVisible();
 
-    // A07: text equivalence — the map's numbers are present in text.
-    await expect(page.getByTestId("reach-text-equivalent")).toContainText("1600 metres");
+    await expect(page.getByRole("heading", { name: /comfortable minutes from/ })).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByTestId("reach-text-equivalent")).toBeVisible();
+    await expect(page.getByText(/of the standard/).first()).toBeVisible();
+
+    // Journey tabs are clickable: Confidence tab shows the calculation detail.
+    await page.getByRole("tab", { name: "Confidence" }).click();
+    await expect(page.getByRole("heading", { name: "How this was calculated" })).toBeVisible();
+    await page.getByRole("button", { name: "Show the detail" }).click();
+    await expect(page.getByText(/real isochrones on the walking network/i)).toBeVisible();
+
+    // Map/text parity (A07): the global text view mirrors the results.
     await page.getByRole("button", { name: "Show text map view" }).click();
     await expect(page.getByRole("heading", { name: "Map information in text" })).toBeVisible();
-    await expect(page.getByTestId("reach-text-equivalent")).toBeVisible();
+    await page.getByRole("button", { name: "Close text view" }).click();
 
     await axeScan(page);
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "desktop-reach-results.png"), fullPage: false });
+  });
 
-    // Full map mode with Escape exit.
+  test("panel minimises to the dock and restores", async ({ page }) => {
+    await page.goto("/reach");
+    await expect(page.getByText("How far can you go?")).toBeVisible();
+    await page.getByRole("button", { name: "Minimise My Reach" }).click();
+    await expect(page.getByRole("button", { name: "My Reach" })).toBeVisible(); // dock chip
+    await page.getByRole("button", { name: "My Reach" }).click();
+    await expect(page.getByText("How far can you go?")).toBeVisible();
+  });
+
+  test("full map mode with Escape exit", async ({ page }) => {
+    await page.goto("/");
     await page.getByRole("button", { name: "Open full screen map" }).click();
     await expect(page.getByRole("button", { name: "Exit full screen map" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeHidden();
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", { name: "Open full screen map" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "desktop-fullmap-exited.png"), fullPage: false });
   });
 
@@ -77,10 +113,9 @@ test.describe("seven-journey shell (A03/A12/A20) — desktop 1440×900", () => {
 });
 
 test.describe("PWA offline shell (A16)", () => {
-  test("shell loads from the service worker when the network is cut; no data is promised", async ({ page, context }) => {
+  test("shell loads from the service worker when the network is cut", async ({ page, context }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
-    // Give the service worker a moment to activate.
     await page.waitForTimeout(1500);
     await context.setOffline(true);
     await page.reload();
@@ -89,22 +124,22 @@ test.describe("PWA offline shell (A16)", () => {
   });
 });
 
-test.describe("Phase 5 feature journeys", () => {
-  test("find need shows provenance-carrying results (toilets/services)", async ({ page }) => {
+test.describe("Phase 5 feature journeys on the real map", () => {
+  test("find need lists provenance-carrying results and opens map popup", async ({ page }) => {
     await page.goto("/find");
     await page.getByRole("button", { name: /^Seat/ }).click();
-    await expect(page.getByRole("list")).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".place-results li").first()).toBeVisible({ timeout: 15_000 });
     const first = page.locator(".place-results li").first();
-    await expect(first).toContainText("·");
-    // Every row carries a confidence word, never colour alone.
     await expect(first).toContainText(/verified|mapped|community verified|inferred|unknown/i);
+    await first.getByRole("button").click();
+    await expect(page.locator(".maplibregl-popup").first()).toBeVisible({ timeout: 10_000 });
   });
 
-  test("route comparison never shows an unexplained score and discloses unknowns (A06)", async ({ page }) => {
+  test("route comparison draws real lines and discloses unknowns (A06)", async ({ page }) => {
     await page.goto("/route");
-    await page.getByLabel("Destination").fill("Leeds railway station");
+    await page.getByLabel("Destination").fill("Kirkgate");
     await page.getByRole("button", { name: "Compare routes" }).click();
-    await expect(page.getByRole("heading", { name: "Fastest" })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole("heading", { name: "Fastest" })).toBeVisible({ timeout: 20_000 });
     await expect(page.getByText(/Unknown —/).first()).toBeVisible();
     await expect(page.getByText("Plan, don't navigate")).toBeVisible();
   });
@@ -113,35 +148,35 @@ test.describe("Phase 5 feature journeys", () => {
     await page.goto("/parks");
     await page.getByText("Regular benches").click();
     await page.getByRole("button", { name: "Show park matches" }).click();
-    await expect(page.getByRole("heading", { name: /.+/, level: 2 }).first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole("heading", { name: /.+/, level: 2 }).first()).toBeVisible({ timeout: 20_000 });
     await expect(page.getByText("We don't have evidence for this yet.").first()).toBeVisible();
     await expect(page.getByText("Never inferred", { exact: true })).toBeVisible();
   });
 });
 
-test.describe("seven-journey shell (A03/A12/A20) — mobile 390×844", () => {
+test.describe("full-screen map shell — mobile 390×844", () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
   test("location-denied path still completes the reach journey", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Explore Leeds" })).toBeVisible();
 
-    // Deny location (Playwright auto-denies unless permission granted).
     await page.getByRole("button", { name: "Use my current location" }).click();
     await expect(page.getByRole("status")).toContainText("Enter a place or postcode instead", { timeout: 15_000 });
 
     await page.getByLabel("Start from a place or postcode").fill("LS1 3AD");
     await page.getByRole("button", { name: /Where can I go\?/ }).click();
-    await page.getByRole("button", { name: "Use the example place" }).click();
+    await page.getByRole("button", { name: "use Park Square" }).click();
     await page.getByRole("button", { name: "Show my reach" }).click();
-    await expect(page.getByRole("heading", { name: /comfortable minutes from/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /comfortable minutes from/ })).toBeVisible({ timeout: 25_000 });
+    await expect(page.locator(".maplibregl-canvas")).toBeVisible();
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "mobile-reach-results.png"), fullPage: false });
 
     await axeScan(page);
     await page.screenshot({ path: path.join(EVIDENCE_DIR, "mobile-home.png"), fullPage: false });
   });
 
-  test("mobile menu opens from the header with two-column tasks", async ({ page }) => {
+  test("mobile menu opens from the header", async ({ page }) => {
     await page.goto("/");
     const toggle = page.getByRole("button", { name: "Open navigation" });
     await toggle.click();
