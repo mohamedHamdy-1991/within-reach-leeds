@@ -1,5 +1,9 @@
+# Zero-minutes policy (Mohamed): manual runs only. Tests run locally via
+# `pnpm check` + `pnpm test:e2e` — see evidence/FINAL_ACCEPTANCE_REPORT.md.
 name: CI
-on: [push, pull_request]
+on:
+  workflow_dispatch: {}
+permissions: {contents: read}
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -10,5 +14,3 @@ jobs:
         with: {node-version: 22, cache: pnpm}
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
-      - run: pnpm test:e2e
-

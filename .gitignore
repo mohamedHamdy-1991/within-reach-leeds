@@ -26,3 +26,6 @@ evidence/phase-*/artifacts/
 
 # Python build artifacts
 *.egg-info/
+
+# Data payloads are reproducible via the pipeline; manifests stay in git.
+data/**/payload
