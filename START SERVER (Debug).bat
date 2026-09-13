@@ -103,10 +103,32 @@ if !errorlevel! equ 0 (
 )
 
 echo.
+echo Waiting for the web app, then opening your browser...
+set /a TRIES=0
+:waitweb
+curl -s -o nul http://localhost:5173/
+if !errorlevel! equ 0 goto openweb
+set /a TRIES+=1
+if !TRIES! lss 30 (
+    timeout /t 2 /nobreak >nul
+    goto waitweb
+)
+echo   [X] THE WEB PAGE DID NOT START. Most likely causes:
+echo       1. Docker was not fully started before step 3
+echo       2. Your disk is nearly full
+echo       3. Check the "WITHIN REACH WEB (debug)" window for the real error
+echo.
+pause
+exit /b 1
+
+:openweb
+start "" http://localhost:5173
+echo   [OK] Your browser should now show WITHIN REACH.
+echo.
 echo ============================================================
-echo   Open the app :  http://localhost:5173
-echo   API docs     :  http://127.0.0.1:8000/docs
-echo   To stop      :  double-click  CLOSE SERVER.bat
+echo   App    :  http://localhost:5173
+echo   Docs   :  http://127.0.0.1:8000/docs
+echo   To stop:  double-click  CLOSE SERVER.bat
 echo ============================================================
 
 :done_ok

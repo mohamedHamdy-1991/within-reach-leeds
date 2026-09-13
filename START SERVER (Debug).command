@@ -91,6 +91,7 @@ else
   nohup pnpm --filter web dev > "$LOG_DIR/web.log" 2>&1 &
   disown
   cd - > /dev/null
+  STARTED_WEB=1
   for i in $(seq 1 30); do curl -s -o /dev/null http://localhost:5173/ && break; sleep 2; done
   curl -s -o /dev/null http://localhost:5173/ \
     && ok "Web app running (log: $LOG_DIR/web.log)" || bad "Web app did not answer — see $LOG_DIR/web.log"
@@ -104,5 +105,25 @@ say "  📋 Logs folder:    .runtime/logs/"
 say "  🛑 To stop:        double-click  CLOSE SERVER.command"
 say "════════════════════════════════════════════════════════"
 say ""
-say "You can close this window — the servers keep running."
+
+if [ "$STARTED_WEB" = "1" ]; then
+  say "Waiting for the web app to be ready, then opening your browser…"
+  for i in $(seq 1 45); do
+    curl -s -o /dev/null http://localhost:5173/ && break
+    sleep 2
+  done
+fi
+
+if curl -s -o /dev/null http://localhost:5173/; then
+  open "http://localhost:5173"
+  say "🌐 Your browser should now show WITHIN REACH."
+  say "You can close this window — the servers keep running."
+else
+  say ""
+  say "❌ THE WEB PAGE DID NOT START. Most likely causes:"
+  say "   1. Your Mac's disk is nearly full (check:  about this Mac > Storage)"
+  say "   2. The web log has the real error:  .runtime/logs/web.log"
+  say "The window will stay open so you can read the messages above."
+  read -r -p "Press Return to close this window…" _
+fi
 exit 0
