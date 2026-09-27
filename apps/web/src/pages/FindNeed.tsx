@@ -99,7 +99,7 @@ export function FindNeed() {
           ))}
         </div>
 
-        {need && loading && <LoadingState message="Checking the data release" />}
+        {need && loading && <LoadingState message="Checking the data release" illustration={`${import.meta.env.BASE_URL}generated/loading-state.png`} />}
 
         {need && error && (
           <EmptyState
@@ -109,7 +109,7 @@ export function FindNeed() {
         )}
 
         {need && !loading && !error && places && places.length === 0 && (
-          <EmptyState message="No known places of this kind inside 2 km of your starting point. That is an honest empty result, not an error." />
+          <EmptyState message="No known places of this kind inside 2 km of your starting point. That is an honest empty result, not an error." illustration={`${import.meta.env.BASE_URL}generated/empty-state.png`} />
         )}
 
         {need && !loading && !error && places && places.length > 0 && (

@@ -4,6 +4,7 @@ import { useApp } from "../state/app";
 import { useMapController } from "../state/map";
 import { RealMap } from "../map/RealMap";
 import { DockProvider, PANEL_TITLES } from "./GlassPanel";
+import { OfflineNotice } from "./OfflineNotice";
 
 function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(() =>
@@ -157,6 +158,8 @@ export function AppShell() {
           <DataStatusBadge />
         </div>
       </header>
+
+      <OfflineNotice />
 
       <div className="map-topbar">
         <button

@@ -153,6 +153,23 @@
   font-family: var(--font-body);
   color: var(--color-ink);
 }
+.wr-state-art {
+  width: 200px;
+  max-width: 70%;
+  margin: 0 auto var(--space-3);
+  display: block;
+  border-radius: 12px;
+}
+.wr-state-art--loading {
+  width: 160px;
+  animation: wr-art-breathe 2.2s ease-in-out infinite;
+}
+@keyframes wr-art-breathe {
+  50% { opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wr-state-art--loading { animation: none; }
+}
 .wr-loading-state[aria-busy="true"]::after {
   content: "";
   display: block;

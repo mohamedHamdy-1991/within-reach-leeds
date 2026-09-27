@@ -228,6 +228,11 @@ export function Home() {
         <h1 id="page-title" style={{ margin: 0, fontSize: "1.3rem" }}>Explore Leeds</h1>
         <MinimiseButton id="explore-home" title="Explore Leeds" />
       </div>
+      <img
+        src={`${import.meta.env.BASE_URL}generated/hero-band.png`}
+        alt=""
+        className="hero-band"
+      />
       <div className="glass-panel__body">
         <p className="lead" style={{ marginTop: 0 }}>
           The whole screen is a live map. Choose a journey task — the map stays with you.

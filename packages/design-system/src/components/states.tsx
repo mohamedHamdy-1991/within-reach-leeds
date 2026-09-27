@@ -10,18 +10,29 @@ export function SafetyNotice({ title, children }: { title: string; children: Rea
   );
 }
 
-export function EmptyState({ message, action }: { message: string; action?: ReactNode }) {
+export function EmptyState({
+  message,
+  action,
+  illustration,
+}: {
+  message: string;
+  action?: ReactNode;
+  /** Decorative state art URL (rendered with empty alt). */
+  illustration?: string;
+}) {
   return (
     <div className="wr-empty-state">
+      {illustration && <img src={illustration} alt="" className="wr-state-art" />}
       <p>{message}</p>
       {action}
     </div>
   );
 }
 
-export function LoadingState({ message = "Loading" }: { message?: string }) {
+export function LoadingState({ message = "Loading", illustration }: { message?: string; illustration?: string }) {
   return (
     <div className="wr-loading-state" aria-busy="true" role="status">
+      {illustration ? <img src={illustration} alt="" className="wr-state-art wr-state-art--loading" /> : null}
       <p>{message}</p>
     </div>
   );

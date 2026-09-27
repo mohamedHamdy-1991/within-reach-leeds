@@ -109,7 +109,7 @@ export function ParkMatch() {
       )}
 
       {parks && parks.length === 0 && !error && (
-        <EmptyState message="No known parks inside 2 km. That is an honest empty result, not an error." />
+        <EmptyState message="No known parks inside 2 km. That is an honest empty result, not an error." illustration={`${import.meta.env.BASE_URL}generated/empty-state.png`} />
       )}
 
       {rows.length > 0 && (
