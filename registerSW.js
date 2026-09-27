@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/within-reach-leeds/sw.js', { scope: '/within-reach-leeds/' })})}
