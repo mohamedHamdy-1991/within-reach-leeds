@@ -1,7 +1,12 @@
 import type { MetaDto, PlaceDto, RouteOptionSummary } from "./types";
 import type { Feature } from "geojson";
 
-const API_BASE = "/api/v1";
+/**
+ * API base: relative in local dev (vite proxy → localhost:8000). For the
+ * GitHub Pages deployment the build bakes the hosted Space URL in via
+ * VITE_API_BASE (e.g. https://<owner>-within-reach-api.hf.space/api/v1).
+ */
+const API_BASE = import.meta.env.VITE_API_BASE ?? "/api/v1";
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, { headers: { Accept: "application/json" } });

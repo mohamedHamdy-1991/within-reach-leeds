@@ -30,3 +30,7 @@ evidence/phase-*/artifacts/
 # Data payloads are reproducible via the pipeline; manifests stay in git.
 data/**/*payload*
 data/**/payload
+
+# Cloud deployment payloads (uploaded to the HF Space separately)
+deploy/space/valhalla/
+deploy/space/api/places-bundle.json.gz

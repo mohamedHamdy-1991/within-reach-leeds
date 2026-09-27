@@ -2,7 +2,7 @@ $ vitest run
 
 [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90m/Volumes/Mo.Hamdy/WITHIN_REACH_LEEDS/apps/web[39m
 
-(node:73448) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:76270) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
 [90mstderr[2m | src/test/app.test.tsx[2m > [22m[2mHome (P01)[2m > [22m[2mkeeps the place input path usable when location is denied (A04)
 [22m[39mAn update to AppProvider inside a test was not wrapped in act(...).
@@ -40,10 +40,10 @@ act(() => {
 
 This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
- [32m✓[39m src/test/app.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 323[2mms[22m[39m
+ [32m✓[39m src/test/app.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 366[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
 [2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
-[2m   Start at [22m 23:07:57
-[2m   Duration [22m 764ms[2m (transform 77ms, setup 48ms, collect 133ms, tests 323ms, environment 107ms, prepare 38ms)[22m
+[2m   Start at [22m 23:19:40
+[2m   Duration [22m 1.01s[2m (transform 97ms, setup 118ms, collect 188ms, tests 366ms, environment 117ms, prepare 55ms)[22m
 

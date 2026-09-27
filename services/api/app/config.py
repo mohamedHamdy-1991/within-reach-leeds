@@ -19,6 +19,11 @@ class Settings:
     bounds: tuple[float, float, float, float] = field(default_factory=lambda: tuple(float(v) for v in _env("CITY_BOUNDS", "-1.80,53.65,-1.28,54.02").split(",")))
     rate_limit_per_minute: int = field(default_factory=lambda: int(_env("RATE_LIMIT_PER_MINUTE", "60")))
     max_route_points: int = field(default_factory=lambda: int(_env("MAX_ROUTE_POINTS", "50")))
+    data_backend: str = field(default_factory=lambda: _env("DATA_BACKEND", "postgres"))
+    allowed_origins: str = field(default_factory=lambda: _env(
+        "ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,https://mohamedhamdy-1991.github.io",
+    ))
     api_version: str = "0.1.0"
 
 

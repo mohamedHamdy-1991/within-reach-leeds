@@ -14,6 +14,7 @@ import time
 from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from .config import settings
@@ -84,8 +85,19 @@ def create_app(*, db: Any = _UNSET, valhalla: Any = _UNSET) -> FastAPI:
         description="Planning assistance API. Never a guarantee of safety or accessibility.",
     )
     limiter = RateLimiter(settings.rate_limit_per_minute)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[o.strip() for o in settings.allowed_origins.split(",") if o.strip()],
+        allow_methods=["GET", "POST"],
+        allow_headers=["*"],
+    )
     if db is _UNSET:
-        from . import repository as db_module
+        if settings.data_backend == "json":
+            from deploy_static import static_store as db_module
+
+            db_module.load_bundle()
+        else:
+            from . import repository as db_module
 
         db = db_module
     if valhalla is _UNSET:
