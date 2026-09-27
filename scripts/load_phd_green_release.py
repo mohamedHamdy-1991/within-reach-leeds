@@ -46,7 +46,7 @@ def leeds_box_27700():
 
 def main() -> int:
     leeds = leeds_box_27700()
-    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5432/withinreach")
+    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5433/withinreach")
 
     manifest = {
         "release_id": RELEASE_ID,

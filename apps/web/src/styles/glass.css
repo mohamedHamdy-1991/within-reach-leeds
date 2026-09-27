@@ -44,12 +44,15 @@
 /* Map toolbar (top-right) */
 .map-topbar {
   position: fixed;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 16px;
+  left: calc(14px + var(--rail, 200px) + 12px + min(440px, 94vw) + 20px);
   z-index: 6;
   display: flex;
   gap: 8px;
+  transition: left 200ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+.rail-collapsed .map-topbar {
+  left: calc(14px + 72px + 12px + min(440px, 94vw) + 20px);
 }
 .map-topbar .map-list-toggle { box-shadow: 0 8px 24px rgba(15, 15, 15, 0.18); }
 
@@ -194,7 +197,7 @@
     border-radius: 16px;
   }
   .glass-panel--right, .stage .control-panel.panel-right { left: 10px; right: 10px; width: auto; }
-  .map-topbar { top: 74px; }
+  .map-topbar { top: 74px; left: auto; right: 10px; }
   .panel-dock { bottom: 8px; }
   .map-attribution { display: none; }
 }

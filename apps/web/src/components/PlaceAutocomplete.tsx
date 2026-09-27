@@ -27,11 +27,14 @@ export function PlaceAutocomplete({ id, label, placeholder, onPick, onExactQuery
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const requestId = useRef(0);
+  // A picked hint becomes the value; re-searching it would reopen the
+  // dropdown over the action buttons (Google closes on pick too).
+  const pickedNameRef = useRef<string | null>(null);
 
   useEffect(() => {
     const query = value.trim();
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (query.length < 2) {
+    if (query.length < 2 || query === pickedNameRef.current) {
       setHints([]);
       setOpen(false);
       return;
@@ -65,7 +68,13 @@ export function PlaceAutocomplete({ id, label, placeholder, onPick, onExactQuery
     return () => document.removeEventListener("mousedown", onOutside);
   }, []);
 
+  // Close on input blur (slightly delayed: options commit on mousedown first).
+  const onBlurInput = () => {
+    window.setTimeout(() => setOpen(false), 150);
+  };
+
   const choose = (hit: GeocodeHit) => {
+    pickedNameRef.current = hit.name;
     setValue(hit.name);
     setOpen(false);
     setHints([]);
@@ -120,6 +129,7 @@ export function PlaceAutocomplete({ id, label, placeholder, onPick, onExactQuery
         onChange={(event) => setValue(event.target.value)}
         onFocus={() => hints.length > 0 && setOpen(true)}
         onKeyDown={onKeyDown}
+        onBlur={onBlurInput}
       />
       <ul id={`${id}-hints`} role="listbox" aria-label="Suggestions" className="autocomplete-list" hidden={!open}>
         {hints.map((hint, index) => (

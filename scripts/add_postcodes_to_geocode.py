@@ -6,7 +6,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
 async def main() -> None:
-    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5432/withinreach")
+    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5433/withinreach")
     async with engine.begin() as conn:
         # Crossings carry Postcode in attrs; index each distinct postcode at its site.
         result = await conn.execute(text(

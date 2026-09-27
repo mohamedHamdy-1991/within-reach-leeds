@@ -85,7 +85,7 @@ async def main() -> int:
     collector = PlaceCollector()
     collector.apply_file(str(read_path), locations=True)
 
-    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5432/withinreach")
+    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5433/withinreach")
     async with engine.begin() as conn:
         await conn.execute(
             text(

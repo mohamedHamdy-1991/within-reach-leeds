@@ -32,7 +32,7 @@ def rows(name: str) -> list[dict[str, str]]:
 
 
 async def main() -> int:
-    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5432/withinreach")
+    engine = create_async_engine("postgresql+asyncpg://wr:wr_local_dev_only@127.0.0.1:5433/withinreach")
     counts: dict[str, int] = {}
     async with engine.begin() as conn:
         await conn.execute(

@@ -143,9 +143,14 @@ test.describe("Phase 5 feature journeys on the real map", () => {
 
   test("route comparison draws real lines and discloses unknowns (A06)", async ({ page }) => {
     await page.goto("/route");
-    await page.getByLabel("Destination").fill("Kirkgate");
+    // Pick From and To from live suggestions, like a real user.
+    await page.getByLabel("From", { exact: true }).fill("Leeds Art");
+    await page.locator("#route-from-hints li").first().click();
+    await page.getByLabel("To", { exact: true }).fill("Kirkgate");
+    await page.locator("#route-dest-hints li").first().click();
     await page.getByRole("button", { name: "Compare routes" }).click();
-    await expect(page.getByRole("heading", { name: "Fastest" })).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByText(/route options compared/)).toBeVisible({ timeout: 25_000 });
+    await expect(page.locator(".route-option").first()).toBeVisible();
     await expect(page.getByText(/Unknown —/).first()).toBeVisible();
     await expect(page.getByText("Plan, don't navigate")).toBeVisible();
   });
